@@ -1,0 +1,6 @@
+body { font-family: 'Fira Sans', sans-serif; overflow-x: hidden; background-color: #05051f; font-size: 20px; }
+.screen { display: none }
+.screen.active { display: block }
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 40 }
+.nav-item { transition: all .2s }
+.nav-item.active { color: #06b6d4; transform: scale(1.1) }
