@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jawab Express Universe</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="container" id="home-screen">
+        <h1>🚀 Jawab Express Universe</h1>
+        <p>Pengembaraan Kuiz Angkasa Lepas</p>
+        <div class="stats">
+            <span>⭐ Koin: <span id="coin-count">0</span></span>
+            <span>🏆 Tahap: <span id="level-count">1</span></span>
+        </div>
+        <button class="btn" onclick="startQuiz('bm')">Misi Bahasa Melayu</button>
+        <button class="btn" onclick="startQuiz('math')">Misi Matematik</button>
+    </div>
+
+    <div class="container hidden" id="quiz-screen">
+        <h2 id="quiz-title" style="color: #38bdf8; font-size: 20px;">Soalan</h2>
+        <p id="question-text" style="font-size: 18px; color: #fff; margin: 20px 0;"></p>
+        <div id="options-container"></div>
+        <button class="btn hidden" id="back-btn" onclick="goHome()" style="background: #475569; margin-top: 15px;">Kembali ke Menu</button>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
