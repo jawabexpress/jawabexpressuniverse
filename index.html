@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="ms"><head><script>window["__codeletBootstrap__"]=JSON.parse('{"A":"A","B":"20260723-05-e9a76f4"}');</script><script src="/_sdk/e358eac22bd01364.telemetry_sdk.js" integrity="sha512-KPxp3rw4K8Nu9ceWJc3gyM7srgaZxiFWOVbyu260EYzzAqdz10mfo5xyXrCx+wEKtGo77JbtmwXvFLbwrGzwvw=="></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jawab Express Universe</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600;700;900&amp;display=swap" rel="stylesheet">
+  <style>
+body{font-family:'Fira Sans',sans-serif;overflow-x:hidden;background-color:#05051f;font-size:20px}
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;background:radial-gradient(ellipse at 50% 25%,rgba(255,115,224,.2),transparent 12%),radial-gradient(ellipse at 50% 25%,transparent 0%,transparent 19%,rgba(108,72,255,.18) 23%,transparent 34%),radial-gradient(ellipse at 50% 25%,transparent 0%,transparent 31%,rgba(38,194,255,.12) 34%,transparent 48%)}
+.star{position:absolute;border-radius:50%;background:white;animation:twinkle var(--dur,3s) infinite alternate}
+@keyframes twinkle{0%{opacity:.15;transform:scale(.8)}100%{opacity:1;transform:scale(1.2)}}
+.shooting-star{position:absolute;width:2px;height:2px;background:white;border-radius:50%;animation:shoot 4s linear infinite;opacity:0}
+.shooting-star::after{content:'';position:absolute;top:0;right:0;width:40px;height:1px;background:linear-gradient(to left,white,transparent);transform:translateX(100%)}
+@keyframes shoot{0%{transform:translate(0,0);opacity:0}5%{opacity:1}80%{opacity:1}100%{transform:translate(-300px,200px);opacity:0}}
+.neon-btn{box-shadow:0 0 10px currentColor,0 0 20px currentColor,inset 0 0 10px rgba(255,255,255,.1);transition:all .15s;position:relative;overflow:hidden}
+.neon-btn:hover{box-shadow:0 0 20px currentColor,0 0 40px currentColor,inset 0 0 20px rgba(255,255,255,.2);transform:scale(1.05)}
+.neon-btn:active{transform:scale(.93)}
+.tactile-btn{transition:all .12s}.tactile-btn:active{transform:scale(.9) translateY(2px)}.tactile-btn:hover{filter:brightness(1.2)}
+.planet-card{transition:all .3s;border:1px solid rgba(139,92,246,.3);position:relative;overflow:hidden}
+.planet-card:hover{border-color:rgba(139,92,246,.8);box-shadow:0 0 25px rgba(139,92,246,.4);transform:translateY(-4px)}
+.crystal-glow{text-shadow:0 0 10px rgba(167,139,250,.8),0 0 30px rgba(167,139,250,.3)}
+.progress-bar{background:linear-gradient(90deg,#7c3aed,#06b6d4);border-radius:9999px;height:10px;position:relative;overflow:hidden}
+.progress-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:shimmer 2s infinite}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.screen{display:none}.screen.active{display:block}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:40}
+.nav-item{transition:all .2s}.nav-item.active{color:#06b6d4;transform:scale(1.1)}
+.stat-pill{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:9999px;padding:8px 14px;font-size:16px;display:flex;align-items:center;gap:5px;backdrop-filter:blur(4px);color:#e2e8f0}
+.menu-btn{background:rgba(20,15,40,.85);border:1px solid rgba(6,182,212,.15);border-radius:14px;padding:14px;text-align:center;transition:all .2s;font-size:15px;color:#e2e8f0}
+.menu-btn:hover{border-color:rgba(6,182,212,.6);box-shadow:0 0 16px rgba(6,182,212,.25);transform:translateY(-2px)}
+.menu-btn:active{transform:scale(.92) translateY(1px)}
+.section-card{background:rgba(20,10,40,.85);border:1px solid rgba(139,92,246,.2);border-radius:16px;padding:20px;margin-bottom:12px;backdrop-filter:blur(4px)}
+.hero-idle{animation:heroIdle 4s ease-in-out infinite}
+@keyframes heroIdle{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-6px) scale(1.04)}}
+.pet-bounce{animation:petB 2.2s ease-in-out infinite}
+@keyframes petB{0%,100%{transform:translateY(0) rotate(-3deg)}30%{transform:translateY(-8px) rotate(3deg)}}
+.pet-play{animation:petPlay 5s ease-in-out infinite}
+@keyframes petPlay{0%,100%{transform:translate(0,0)}40%{transform:translate(-5px,3px)}80%{transform:translate(-3px,5px)}}
+.coin-spin{display:inline-block;animation:coinSpin 1.8s linear infinite}
+@keyframes coinSpin{50%{transform:rotateY(180deg)}}
+.reward-overlay{position:fixed;inset:0;z-index:55;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.8);backdrop-filter:blur(6px);animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.chest-anim{animation:chestOpen .8s ease-out}
+@keyframes chestOpen{0%{transform:scale(.5);opacity:0}60%{transform:scale(1.15);opacity:1}100%{transform:scale(1);opacity:1}}
+.levelup-overlay{position:fixed;inset:0;z-index:58;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.85);backdrop-filter:blur(8px)}
+.levelup-text{font-size:3rem;font-weight:900;background:linear-gradient(135deg,#fbbf24,#f472b6,#7c3aed,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:levelPulse 1s ease-in-out infinite alternate}
+@keyframes levelPulse{0%{transform:scale(1)}100%{transform:scale(1.1)}}
+.confetti{position:absolute;width:8px;height:8px;border-radius:2px;animation:confettiFall 2s ease-out forwards}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(300px) rotate(720deg);opacity:0}}
+.loading-screen{position:fixed;inset:0;z-index:70;display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#0a0a2e,#1a0533,#0d1b2a);transition:opacity .5s}
+.loading-screen.fade-out{opacity:0;pointer-events:none}
+.loading-dots span{display:inline-block;width:12px;height:12px;margin:0 4px;border-radius:50%;background:#06b6d4;animation:loadDot 1.2s ease-in-out infinite}
+.loading-dots span:nth-child(2){animation-delay:.2s}
+.loading-dots span:nth-child(3){animation-delay:.4s}
+@keyframes loadDot{0%,100%{transform:scale(.6);opacity:.4}50%{transform:scale(1.2);opacity:1}}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:65;padding:12px 24px;border-radius:12px;font-size:16px;font-weight:600;animation:toastIn .3s ease-out}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.answer-btn{transition:all .2s;border:2px solid rgba(139,92,246,.3);color:#f1f5f9}
+.answer-btn:hover{border-color:rgba(6,182,212,.8);background:rgba(6,182,212,.1)}
+.answer-btn.correct{border-color:#10b981;background:rgba(16,185,129,.2);animation:correctFlash .5s}
+.answer-btn.wrong{border-color:#ef4444;background:rgba(239,68,68,.2);animation:wrongShake .5s}
+@keyframes correctFlash{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes wrongShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.timer-bar{height:8px;border-radius:9999px;transition:width .1s linear}
+.mission-card{background:rgba(15,8,35,.9);border:2px solid rgba(139,92,246,.25);border-radius:20px;padding:20px;transition:all .3s;position:relative;overflow:hidden}
+.mission-card:hover{border-color:rgba(6,182,212,.7);box-shadow:0 0 30px rgba(6,182,212,.3);transform:translateY(-3px)}
+.grade-planet{width:100%;aspect-ratio:1;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:3px solid rgba(255,255,255,.2);transition:all .3s;cursor:pointer;position:relative;overflow:hidden}
+.grade-planet:hover{transform:scale(1.08);box-shadow:0 0 30px rgba(139,92,246,.5)}
+.grade-planet:active{transform:scale(.95)}
+.nebula-bg{position:absolute;inset:0;border-radius:50%;opacity:.3;background:radial-gradient(circle,rgba(255,255,255,.2),transparent 70%);animation:nebulaPulse 3s ease-in-out infinite}
+@keyframes nebulaPulse{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.1);opacity:.5}}
+.duel-panel{border:2px solid rgba(139,92,246,.3);border-radius:16px;padding:16px;text-align:center;flex:1}.duel-battle-screen{position:fixed;inset:0;z-index:35;display:flex;flex-direction:column;height:calc(100 * min(var(--vh,1vh),1vh));min-height:0;overflow:hidden;background:radial-gradient(circle at 50% 50%,rgba(124,58,237,.22),transparent 34%),linear-gradient(180deg,#10082c,#05051f)}.duel-player-zone{flex:1 1 0;min-height:0;overflow:hidden;padding:10px 14px;background:rgba(12,8,34,.88);border:1px solid rgba(139,92,246,.35)}.duel-player-two{transform:rotate(180deg);border-bottom-color:rgba(6,182,212,.65)}.duel-player-one{border-top-color:rgba(6,182,212,.65)}.duel-player-content{max-width:680px;height:100%;margin:auto;display:flex;flex-direction:column;justify-content:center;gap:7px}.duel-player-head{display:flex;align-items:center;gap:9px}.duel-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:25px;background:linear-gradient(135deg,#7c3aed,#06b6d4);border:2px solid #67e8f9;box-shadow:0 0 16px rgba(6,182,212,.5)}.duel-avatar-p2{background:linear-gradient(135deg,#ec4899,#7c3aed);border-color:#f9a8d4}.duel-label{font-size:10px;font-weight:900;letter-spacing:.16em}.duel-label-p1{color:#67e8f9}.duel-label-p2{color:#f9a8d4}.duel-player-name{font-size:15px;font-weight:800;color:#f8fafc}.duel-stat{margin-left:auto;display:flex;gap:3px;align-items:center;padding:5px 8px;border-radius:9px;background:rgba(255,255,255,.08);font-size:13px}.duel-stat+.duel-stat{margin-left:0}.duel-timer{display:flex;align-items:center;gap:7px;color:#fbbf24;font-size:13px}.duel-timer-track{height:6px;flex:1;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}.duel-timer-fill{height:100%;width:100%;border-radius:99px;background:linear-gradient(90deg,#22d3ee,#a78bfa)}.duel-timer-p2{background:linear-gradient(90deg,#f472b6,#a78bfa)}.duel-question{margin:0;padding:8px 12px;border-radius:10px;text-align:center;font-size:15px;font-weight:800;color:#172033;background:rgba(255,255,255,.94);min-height:40px;display:flex;align-items:center;justify-content:center}.duel-answer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.duel-answer-grid .answer-btn{padding:8px;font-size:13px;background:rgba(255,255,255,.06)}.duel-arena-strip{height:76px;flex:0 0 76px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(6,182,212,.2),transparent 62%),#080622}.duel-arena-line{width:100%;height:1px;background:linear-gradient(90deg,transparent,#22d3ee,transparent);box-shadow:0 0 14px #22d3ee}.duel-arena-title{position:absolute;top:50%;transform:translateY(-50%);padding:4px 13px;border:1px solid rgba(34,211,238,.7);border-radius:999px;background:#0b0730;color:#a5f3fc;font-size:11px;font-weight:900;letter-spacing:.14em;box-shadow:0 0 18px rgba(34,211,238,.4)}.duel-arena-fighters{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 22%;font-size:25px;pointer-events:none}.duel-energy{color:#fbbf24;animation:arenaPulse 1s ease-in-out infinite alternate}.duel-hit-forward{animation:duelForward .45s ease-out}.duel-hit-back{animation:duelBack .45s ease-out}@keyframes duelForward{50%{transform:translateX(20px) scale(1.25);filter:drop-shadow(0 0 12px #22d3ee)}}@keyframes duelBack{50%{transform:translateX(-12px) scale(.9);filter:drop-shadow(0 0 10px #ef4444)}}@keyframes arenaPulse{from{transform:scale(.8);opacity:.45}to{transform:scale(1.25);opacity:1}}@media(max-width:520px){.duel-player-zone{padding:7px 8px}.duel-player-content{gap:4px}.duel-avatar{width:34px;height:34px;font-size:20px}.duel-question{font-size:12px;min-height:32px;padding:5px 7px}.duel-answer-grid{gap:4px}.duel-answer-grid .answer-btn{padding:6px 4px;font-size:11px}.duel-arena-strip{height:62px;flex-basis:62px}.duel-arena-fighters{padding:0 13%;font-size:20px}}
+.modal-panel{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.75);padding:16px;backdrop-filter:blur(4px)}.modal-panel.show{display:flex}
+.modal-inner{background:rgba(15,8,35,.97);border:1px solid rgba(6,182,212,.4);border-radius:20px;max-width:480px;width:100%;max-height:85vh;overflow-y:auto;padding:24px;position:relative}
+.modal-close{position:absolute;top:12px;right:16px;font-size:28px;color:#a78bfa;cursor:pointer;background:none;border:none}
+.shop-item{background:rgba(20,12,50,.9);border:1px solid rgba(139,92,246,.25);border-radius:14px;padding:14px;text-align:center;cursor:pointer;transition:all .2s;color:#e2e8f0}
+.shop-item:hover{border-color:rgba(6,182,212,.6);transform:translateY(-2px)}
+.planet-locked{opacity:.5;filter:grayscale(.6)}
+.galaxy-card{background:rgba(15,8,35,.9);border:2px solid rgba(139,92,246,.25);border-radius:16px;padding:16px;text-align:center;transition:all .3s;cursor:pointer}
+.galaxy-card:hover:not(.planet-locked){border-color:rgba(6,182,212,.7);box-shadow:0 0 20px rgba(6,182,212,.3);transform:translateY(-3px)}
+.setup-input{width:100%;padding:12px 16px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid rgba(139,92,246,.3);color:#f1f5f9;font-size:16px;outline:none;transition:border-color .2s}
+.setup-input:focus{border-color:#06b6d4}
+.hero-pick{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid rgba(139,92,246,.3);cursor:pointer;transition:all .2s;font-size:1.5rem}
+.hero-pick:hover{border-color:#06b6d4;transform:scale(1.1)}
+.hero-pick.selected{border-color:#10b981;background:rgba(16,185,129,.2);box-shadow:0 0 12px rgba(16,185,129,.4)}
+</style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/935a53bc2e11fb8d.data_sdk.js" type="text/javascript" integrity="sha512-qr2oyPnEys1WebcOABaRh6hG77r5PWpqeWW6JTKbRJqly/INsfBi31CVNlTmHqjgeLpkVmmHZJUdxSx/32tOFQ=="></script>
+  <script src="/_sdk/6030e540d4419216.resizing_sdk.js" type="text/javascript" integrity="sha512-b5KWzyoXsbWP4smq4sftIi6Kts4YVBpBsz0BwCViwbBJkK64a3/Z6ZMdWA+qnplNcXw4mhZeqvQi3mOosiRJdA=="></script>
+ </head>
+ <body data-template-id="__page-root" class="text-white relative" style="min-height:calc(100 * min(var(--vh,1vh),1vh))">
+  <div id="loading-screen" class="loading-screen">
+   <div class="text-5xl hero-idle mb-4">
+    🦸
+   </div>
+   <div class="text-xl font-bold text-cyan-200 mb-2">
+    Memuatkan Universe...
+   </div>
+   <div class="loading-dots mb-4"><span></span><span></span><span></span>
+   </div>
+   <p id="loading-tip" class="text-base text-purple-200 max-w-xs text-center px-4"></p>
+  </div>
+  <div class="stars" id="starfield"></div>
+  <div id="toast-container"></div><!-- Welcome Modal -->
+  <div id="welcome-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+   <div data-template-id="welcome-panel" class="canva-panel relative max-w-lg w-full rounded-2xl p-8 text-center border border-purple-500/50" style="background: linear-gradient(135deg, rgba(30, 10, 60, 0.95), rgba(10, 20, 50, 0.95));">
+    <div class="text-5xl mb-4 coin-spin">
+     💎
+    </div>
+    <h1 data-template-id="welcome-title" class="canva-text text-3xl font-bold mb-2 crystal-glow" style="color: rgb(233, 213, 255); font-weight: 900; font-style: normal; font-size: 32px;">💎 JAWAB EXPRESS UNIVERSE</h1>
+    <p data-template-id="welcome-message" class="canva-text text-lg mb-6 leading-relaxed" style="color: rgb(241, 245, 249); font-weight: 400; font-style: normal; font-size: 22px;">Selamat datang, Express Ranger! Jawab soalan, kumpul coin, naik level, dan jelajah galaksi! Pilih misi dan mula pengembaraan!</p><button data-template-id="start-btn" class="canva-button neon-btn tactile-btn px-8 py-3 rounded-full font-bold text-xl" onclick="closeModal()" style="background: linear-gradient(135deg, rgb(124, 58, 237), rgb(6, 182, 212)); color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 22px;">🚀 Mula Pengembaraan</button>
+   </div>
+  </div><!-- Level Up Overlay -->
+  <div id="levelup-overlay" class="levelup-overlay hidden">
+   <div id="confetti-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+   <div class="levelup-text mb-4">
+    ⬆️ LEVEL UP!
+   </div>
+   <p id="levelup-detail" class="text-xl text-cyan-200 font-bold mb-4"></p><button class="neon-btn tactile-btn px-6 py-3 rounded-full text-cyan-200 text-lg" onclick="closeLevelUp()">🎉 Teruskan!</button>
+  </div><!-- Mission Complete Overlay -->
+  <div id="mission-complete-overlay" class="reward-overlay hidden">
+   <div class="text-center max-w-sm mx-auto p-6">
+    <div class="text-5xl mb-3 chest-anim">
+     🏆
+    </div>
+    <h2 class="text-2xl font-black text-yellow-300 mb-2">Misi Selesai!</h2>
+    <div class="section-card text-left space-y-2 mb-4">
+     <p class="text-base text-slate-100">⭐ Skor: <span id="mc-score" class="text-cyan-300 font-bold">0</span> / <span id="mc-total">100</span></p>
+     <p class="text-base text-slate-100">✅ Betul: <span id="mc-correct" class="text-green-300 font-bold">0</span></p>
+     <p class="text-base text-slate-100">❌ Salah: <span id="mc-wrong" class="text-red-300 font-bold">0</span></p>
+     <p class="text-base text-slate-100">💰 Coin: <span id="mc-coins" class="text-yellow-300 font-bold">0</span></p>
+     <p class="text-base text-slate-100">⚡ XP: <span id="mc-xp" class="text-purple-300 font-bold">0</span></p>
+     <p class="text-base text-slate-100">🎖️ Badge: <span id="mc-badge" class="text-green-300 font-bold">-</span></p>
+    </div>
+    <div class="flex gap-3 justify-center flex-wrap">
+     <button class="neon-btn tactile-btn px-5 py-3 rounded-full text-cyan-200 font-bold text-base" onclick="replayMission()">🔄 Main Semula</button> <button class="neon-btn tactile-btn px-5 py-3 rounded-full text-yellow-200 font-bold text-base" onclick="closeMissionComplete()">🚀 Kembali</button>
+    </div>
+   </div>
+  </div><!-- Generic Modal -->
+  <div id="generic-modal" class="modal-panel" onclick="if(event.target===this)closeGenericModal()">
+   <div class="modal-inner">
+    <button class="modal-close" onclick="closeGenericModal()">×</button>
+    <div id="generic-modal-content"></div>
+   </div>
+  </div><!-- Main App -->
+  <div class="relative z-10 pb-24">
+   <!-- HOME -->
+   <div id="screen-home" class="screen active">
+    <div class="relative overflow-hidden">
+     <header class="text-center pt-6 pb-2 px-4 relative">
+      <h1 data-template-id="main-title" class="canva-text text-3xl md:text-4xl font-black tracking-wide crystal-glow" style="color: rgb(0, 0, 0); font-weight: 400; font-style: normal; font-size: 32px;">JAWAB EXPRESS UNIVERSE</h1>
+      <p data-template-id="subtitle" class="canva-text text-lg mt-1" style="color: rgb(0, 0, 0); font-weight: 700; font-style: normal; font-size: 16px;">The Ultimate Learning Adventure</p>
+      <p data-template-id="tagline" class="canva-text italic text-base mt-1" style="color: rgb(0, 0, 0); font-weight: 400; font-style: italic; font-size: 22px;"></p>
+     </header>
+     <div class="flex justify-center gap-6 py-4 relative">
+      <div class="text-center cursor-pointer tactile-btn" onclick="showScreen('hero-system')">
+       <div class="w-24 h-24 rounded-full bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center text-4xl border-2 border-purple-400 hero-idle shadow-lg shadow-purple-500/30 overflow-hidden" id="home-hero-avatar"></div>
+       <p class="text-sm mt-1 text-black"><span id="home-hero-name">Cahaya Murni</span> Lv.<span id="home-hero-lv">1</span></p>
+      </div>
+      <div class="text-center cursor-pointer tactile-btn" onclick="showScreen('pet-system')">
+       <div class="rounded-full bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center text-3xl border-2 border-orange-300 pet-play shadow-lg shadow-orange-500/20" style="width:4.5rem;height:4.5rem" id="home-pet-avatar"></div>
+       <p class="text-sm mt-1 text-black"><span id="home-pet-name">Blaze Jr.</span> · Lv.<span id="home-pet-lv">1</span></p>
+      </div>
+     </div>
+    </div>
+    <div class="flex flex-wrap justify-center gap-2 px-4 py-3">
+     <div class="stat-pill text-black">
+      🪙 <span id="coin-display">0</span>
+     </div>
+     <div class="stat-pill text-black">
+      💎 <span id="diamond-display">0</span>
+     </div>
+     <div class="stat-pill text-black">
+      ⚡ <span id="energy-display">30/30</span>
+     </div>
+     <div class="stat-pill text-black">
+      ⭐ <span id="xp-display">Lv.1</span>
+     </div>
+     <div class="stat-pill text-black">
+      🏅 <span id="rank-display">Bronze I</span>
+     </div>
+    </div>
+    <div class="max-w-md mx-auto px-4 mb-4">
+     <div class="flex justify-center gap-2">
+      <button class="menu-btn tactile-btn w-28" onclick="showScreen('duel')">
+       <div class="text-2xl">
+        🆚
+       </div>
+       <div class="text-sm mt-1">
+        Duel
+       </div></button> <button class="menu-btn tactile-btn w-28" onclick="showScreen('squad')">
+       <div class="text-2xl">
+        👥
+       </div>
+       <div class="text-sm mt-1">
+        Squad
+       </div></button>
+     </div>
+    </div>
+    <div class="max-w-md mx-auto px-4 mb-4">
+     <div class="section-card">
+      <h3 class="text-base font-bold text-yellow-300 mb-2">🎯 Misi Harian</h3>
+      <div id="daily-missions" class="space-y-2"></div>
+     </div>
+    </div>
+    <div class="max-w-md mx-auto px-4 mb-4">
+     <div class="section-card">
+      <h3 class="text-base font-bold text-yellow-300 mb-2">🔥 Streak Harian — Hari ke-<span id="streak-day">1</span></h3>
+      <div class="flex gap-2 overflow-x-auto text-center text-sm pb-1" id="streak-container"></div><button class="neon-btn tactile-btn px-4 py-2 rounded-full text-yellow-200 text-sm mt-2" id="claim-streak-btn" onclick="claimDailyStreak()">🎁 Tuntut Hari Ini</button>
+     </div>
+    </div>
+    <div class="max-w-md mx-auto px-4 mb-4">
+     <div class="section-card">
+      <h3 class="text-base font-bold text-purple-200 mb-2">📊 Progres XP</h3>
+      <div class="bg-white/10 rounded-full overflow-hidden mb-1">
+       <div class="progress-bar" id="xp-bar" style="width:0%"></div>
+      </div>
+      <p class="text-sm text-purple-200" id="xp-progress-text">0/100 XP untuk Level 2</p>
+     </div>
+    </div>
+   </div><!-- SUBJECT SELECTION -->
+   <div id="screen-subject" class="screen">
+    <div class="p-4 max-w-lg mx-auto">
+     <button onclick="showScreen('home')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+     <h2 data-template-id="subject-title" class="canva-text text-2xl font-bold text-center mb-4 crystal-glow" style="color: rgb(241, 245, 249); font-weight: 700; font-style: normal; font-size: 28px;">📚 Pilih Subjek</h2>
+     <div class="space-y-3" id="subject-list"></div>
+    </div>
+   </div><!-- BM GRADE SELECT -->
+   <div id="screen-bm-grade" class="screen">
+    <div class="p-4 max-w-lg mx-auto">
+     <button onclick="showScreen('subject')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+     <h2 data-template-id="bm-grade-title" class="canva-text text-2xl font-bold text-center mb-1 crystal-glow" style="color: rgb(196, 181, 253); font-weight: 900; font-style: normal; font-size: 28px;">📚 BAHASA MELAYU GALAXY</h2>
+     <p data-template-id="bm-grade-sub" class="canva-text text-base text-center mb-6" style="color: rgb(226, 232, 240); font-weight: 400; font-style: normal; font-size: 22px;">Pilih darjah kamu untuk mula misi Bahasa Melayu!</p>
+     <div class="grid grid-cols-3 gap-4">
+      <button class="grade-planet bg-gradient-to-br from-rose-500 to-orange-400 tactile-btn" onclick="selectBMGrade(1)">
+       <div class="nebula-bg"></div><span class="text-3xl relative z-10">🪐</span><span class="text-base font-bold relative z-10 mt-1 text-white">Darjah 1</span></button> <button class="grade-planet bg-gradient-to-br from-amber-500 to-yellow-300 tactile-btn" onclick="selectBMGrade(2)">
+       <div class="nebula-bg"></div><span class="text-3xl relative z-10">🌍</span><span class="text-base font-bold relative z-10 mt-1 text-white">Darjah 2</span></button> <button class="grade-planet bg-gradient-to-br from-emerald-500 to-teal-400 tactile-btn" onclick="selectBMGrade(3)">
+       <div class="nebula-bg"></div><span class="text-3xl relative z-10">🌏</span><span class="text-base font-bold relative z-10 mt-1 text-white">Darjah 3</span></button> <button class="grade-planet bg-gradient-to-br from-cyan-500 to-blue-500 tactile-btn" onclick="selectBMGrade(4)">
+       <div class="nebula-bg"></div><span class="text-3xl relative z-10">🪐</span><span class="text-base font-bold relative z-10 mt-1 text-white">Darjah 4</span></button> <button class="grade-planet bg-gradient-to-br from-violet-500 to-purple-600 tactile-btn" onclick="selectBMGrade(5)">
+       <div class="nebula-bg"></div><span class="text-3xl relative z-10">🌑</span><span class="text-base font-bold relative z-10 mt-1 text-white">Darjah 5</span></button> <button class="grade-planet bg-gradient-to-br from-pink-500 to-red-600 tactile-btn" onclick="selectBMGrade(6)">
+       <div class="nebula-bg"></div><span class="text-3xl relative z-10">☀️</span><span class="text-base font-bold relative z-10 mt-1 text-white">Darjah 6</span></button>
+     </div>
+    </div>
+   </div><!-- BM GALAXY -->
+   <div id="screen-bm-galaxy" class="screen">
+    <div class="p-4 max-w-2xl mx-auto">
+     <button onclick="showScreen('bm-grade')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+     <h2 data-template-id="bm-galaxy-title" class="canva-text text-2xl font-bold text-center mb-1 crystal-glow" style="color: rgb(196, 181, 253); font-weight: 900; font-style: normal; font-size: 28px;">📚 BAHASA MELAYU GALAXY</h2>
+     <p id="bm-galaxy-grade-label" class="text-base text-center text-purple-200 mb-5"></p>
+     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="bm-mission-grid"></div>
+    </div>
+   </div><!-- MATH GRADE SELECT -->
+   <div id="screen-math-grade" class="screen">
+    <div class="p-4 max-w-lg mx-auto">
+     <button onclick="showScreen('subject')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+     <h2 data-template-id="math-grade-title" class="canva-text text-2xl font-bold text-center mb-1 crystal-glow" style="color: rgb(253, 230, 138); font-weight: 900; font-style: normal; font-size: 28px;">🧮 MATEMATIK GALAXY</h2>
+     <p data-template-id="math-grade-sub" class="canva-text text-base text-center mb-6" style="color: rgb(226, 232, 240); font-weight: 400; font-style: normal; font-size: 22px;">Pilih darjah kamu untuk mula misi matematik!</p>
+     <div class="grid grid-cols-3 gap-4">
+      <button class="grade-planet bg-gradient-to-br from-rose-500 to-orange-400 tactile-btn" onclick="selectMathGrade(1)">
+       <div class="nebula-bg"></div><span class="text-3xl relative z-10">🪐</span><span class="text-base font-bold relative z-10 mt-1 text-white">Darjah 1</span></button> <button class="grade-planet bg-gradient-to-br from-amber-500 to-yellow-300 tactile-btn" onclick="selectMathGrade(2)">
+       <div class="nebula-bg"></div><span class="text-3xl relative z-10">🌍</span><span class="text-base font-bold relative z-10 mt-1 text-white">Darjah 2</span></button> <button class="grade-planet bg-gradient-to-br from-emerald-500 to-teal-400 tactile-btn" onclick="selectMathGrade(3)">
+       <div class="nebula-bg"></div><span class="text-3xl relative z-10">🌏</span><span class="text-base font-bold relative z-10 mt-1 text-white">Darjah 3</span></button> <button class="grade-planet bg-gradient-to-br from-cyan-500 to-blue-500 tactile-btn" onclick="selectMathGrade(4)">
+       <div class="nebula-bg"></div><span class="text-3xl relative z-10">🪐</span><span class="text-base font-bold relative z-10 mt-1 text-white">Darjah 4</span></button> <button class="grade-planet bg-gradient-to-br from-violet-500 to-purple-600 tactile-btn" onclick="selectMathGrade(5)">
+       <div class="nebula-bg"></div><span class="text-3xl relative z-10">🌑</span><span class="text-base font-bold relative z-10 mt-1 text-white">Darjah 5</span></button> <button class="grade-planet bg-gradient-to-br from-pink-500 to-red-600 tactile-btn" onclick="selectMathGrade(6)">
+       <div class="nebula-bg"></div><span class="text-3xl relative z-10">☀️</span><span class="text-base font-bold relative z-10 mt-1 text-white">Darjah 6</span></button>
+     </div>
+    </div>
+   </div><!-- MATH GALAXY -->
+   <div id="screen-math-galaxy" class="screen">
+    <div class="p-4 max-w-2xl mx-auto">
+     <button onclick="showScreen('math-grade')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+     <h2 data-template-id="math-galaxy-title" class="canva-text text-2xl font-bold text-center mb-1 crystal-glow" style="color: rgb(253, 230, 138); font-weight: 900; font-style: normal; font-size: 28px;">🧮 MATEMATIK GALAXY</h2>
+     <p id="math-galaxy-grade-label" class="text-base text-center text-purple-200 mb-5"></p>
+     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="mission-grid"></div>
+    </div>
+   </div><!-- MISSION QUIZ -->
+   <div id="screen-mission-quiz" class="screen">
+    <div class="p-3 md:p-5 max-w-4xl mx-auto">
+     <button onclick="exitMission()" class="text-cyan-200 text-base mb-3 tactile-btn">← Keluar Misi</button>
+     <div class="section-card mb-3">
+      <div class="flex justify-between items-center flex-wrap gap-2">
+       <h2 id="mq-title" class="text-xl font-black text-slate-100"></h2>
+       <div class="flex gap-2 flex-wrap">
+        <span id="mq-num" class="stat-pill text-sm">Q 1/100</span> <span id="mq-coins" class="stat-pill text-sm">🪙 0</span> <span id="mq-xp-earned" class="stat-pill text-sm">⭐ 0</span> <span id="mq-correct-count" class="stat-pill text-sm">✅ 0</span>
+       </div>
+      </div>
+     </div>
+     <div class="section-card">
+      <div class="flex justify-between items-center mb-2">
+       <span class="text-base text-cyan-200 font-bold">SOALAN</span> <span class="bg-orange-500 text-white px-3 py-1 rounded-lg text-base font-black">⏱️ <span id="mq-time-label">15</span>s</span>
+      </div>
+      <div class="bg-white/10 rounded-full overflow-hidden mb-4">
+       <div class="timer-bar bg-gradient-to-r from-lime-300 via-cyan-400 to-purple-500" id="mq-timer" style="width:100%"></div>
+      </div>
+      <p id="mq-question" class="text-center text-xl font-bold bg-white/90 text-gray-900 rounded-xl p-5 mb-4 min-h-[80px] flex items-center justify-center"></p>
+      <div id="mq-answers" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+      <div class="flex justify-center gap-3 mt-4 flex-wrap">
+       <button type="button" class="neon-btn tactile-btn px-4 py-2 rounded-xl text-sm font-bold text-purple-200" onclick="useHint()">💡 Hint (💎20)</button> <button type="button" class="neon-btn tactile-btn px-4 py-2 rounded-xl text-sm font-bold text-orange-200" onclick="skipQuestion()">⏩ Skip (🪙30)</button> <button type="button" class="neon-btn tactile-btn px-4 py-2 rounded-xl text-sm font-bold text-blue-200" onclick="useFiftyFifty()">🎯 50:50 (💎50)</button>
+      </div>
+     </div>
+    </div>
+   </div><!-- GALAXY MAP -->
+   <div id="screen-galaxy" class="screen">
+    <div class="p-4 max-w-lg mx-auto">
+     <button onclick="showScreen('home')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+     <h2 data-template-id="galaxy-title" class="canva-text text-2xl font-bold text-center mb-4 crystal-glow" style="color: rgb(224, 242, 254); font-weight: 700; font-style: normal; font-size: 28px;">🗺️ Peta Galaksi (20 Galaksi)</h2>
+     <p class="text-base text-center text-slate-200 mb-4">Buka galaksi dengan kemajuan permainan!</p>
+     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="galaxy-planets"></div>
+    </div>
+   </div><!-- DUEL -->
+   <div id="screen-duel" class="screen">
+    <div class="p-4 max-w-2xl mx-auto">
+     <button onclick="showScreen('home')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+     <h2 data-template-id="duel-title" class="canva-text text-2xl font-bold text-center mb-4 crystal-glow" style="color: rgb(224, 242, 254); font-weight: 700; font-style: normal; font-size: 28px;">🆚 Duel Mode</h2>
+     <div id="duel-setup">
+      <p class="text-base text-slate-200 text-center mb-4">Duel P1 vs P2! Masukkan nama, pilih hero, darjah &amp; subjek.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+       <div class="section-card">
+        <h3 class="text-base font-bold text-cyan-200 mb-2">🦸 Player 1</h3><input id="duel-p1-name" type="text" class="setup-input mb-2" placeholder="Nama P1" maxlength="15">
+        <p class="text-sm text-slate-300 mb-1">Pilih Hero:</p>
+        <div class="flex flex-wrap gap-2 mb-2" id="duel-p1-heroes"></div>
+        <p class="text-sm text-slate-300 mb-1">Darjah:</p><select id="duel-p1-grade" class="setup-input mb-2"><option value="1">Darjah 1</option><option value="2">Darjah 2</option><option value="3">Darjah 3</option><option value="4">Darjah 4</option><option value="5">Darjah 5</option><option value="6">Darjah 6</option></select>
+        <p class="text-sm text-slate-300 mb-1">Subjek:</p><select id="duel-p1-subject" class="setup-input"><option value="math">Matematik</option><option value="bm">Bahasa Melayu</option></select>
+       </div>
+       <div class="section-card">
+        <h3 class="text-base font-bold text-pink-200 mb-2">🧙 Player 2</h3><input id="duel-p2-name" type="text" class="setup-input mb-2" placeholder="Nama P2" maxlength="15">
+        <p class="text-sm text-slate-300 mb-1">Pilih Hero:</p>
+        <div class="flex flex-wrap gap-2 mb-2" id="duel-p2-heroes"></div>
+        <p class="text-sm text-slate-300 mb-1">Darjah:</p><select id="duel-p2-grade" class="setup-input mb-2"><option value="1">Darjah 1</option><option value="2">Darjah 2</option><option value="3">Darjah 3</option><option value="4">Darjah 4</option><option value="5">Darjah 5</option><option value="6">Darjah 6</option></select>
+        <p class="text-sm text-slate-300 mb-1">Subjek:</p><select id="duel-p2-subject" class="setup-input"><option value="math">Matematik</option><option value="bm">Bahasa Melayu</option></select>
+       </div>
+      </div>
+      <div class="text-center">
+       <button class="neon-btn tactile-btn px-6 py-3 rounded-full text-cyan-200 text-base font-bold" onclick="startDuelGame()">🆚 Mula Duel!</button>
+      </div>
+     </div>
+     <div id="duel-game-area" class="hidden duel-battle-screen">
+      <div class="duel-player-zone duel-player-two">
+       <div class="duel-player-content">
+        <div class="duel-player-head">
+         <div class="duel-avatar duel-avatar-p2" id="duel-g-p2-hero">
+          🧙
+         </div>
+         <div>
+          <p class="duel-label duel-label-p2">PLAYER 2</p>
+          <p class="duel-player-name" id="duel-g-p2-name">P2</p>
+         </div>
+         <div class="duel-stat"><span>🪙</span><strong id="duel-g-p2-score">0</strong>
+         </div>
+         <div class="duel-stat"><span>❤️</span><strong id="duel-p2-lives">3</strong>
+         </div>
+        </div>
+        <div class="duel-timer"><span>⏱️</span>
+         <div class="duel-timer-track">
+          <div id="duel-p2-timer-fill" class="duel-timer-fill duel-timer-p2"></div>
+         </div>
+        </div>
+        <p id="duel-g-question-p2" class="duel-question duel-question-p2"></p>
+        <div id="duel-g-answers-p2" class="duel-answer-grid"></div>
+       </div>
+      </div>
+      <div class="duel-arena-strip">
+       <div class="duel-arena-line"></div>
+       <div class="duel-arena-title">
+        ⚔️ BATTLE ARENA ⚔️
+       </div>
+       <div class="duel-arena-fighters"><span id="duel-arena-p2">🧙</span><span class="duel-energy">✦</span><span id="duel-arena-p1">🦸</span>
+       </div>
+       <div class="duel-arena-line"></div>
+      </div>
+      <div class="duel-player-zone duel-player-one">
+       <div class="duel-player-content">
+        <div class="duel-player-head">
+         <div class="duel-avatar duel-avatar-p1" id="duel-g-p1-hero">
+          🦸
+         </div>
+         <div>
+          <p class="duel-label duel-label-p1">PLAYER 1</p>
+          <p class="duel-player-name" id="duel-g-p1-name">P1</p>
+         </div>
+         <div class="duel-stat"><span>🪙</span><strong id="duel-g-p1-score">0</strong>
+         </div>
+         <div class="duel-stat"><span>❤️</span><strong id="duel-p1-lives">3</strong>
+         </div>
+        </div>
+        <div class="duel-timer"><span>⏱️</span>
+         <div class="duel-timer-track">
+          <div id="duel-p1-timer-fill" class="duel-timer-fill duel-timer-p1"></div>
+         </div>
+        </div>
+        <p id="duel-g-question-p1" class="duel-question duel-question-p1"></p>
+        <div id="duel-g-answers-p1" class="duel-answer-grid"></div>
+       </div>
+      </div>
+      <p id="duel-g-result" class="text-base font-bold text-center hidden"></p><button id="duel-g-back" class="neon-btn tactile-btn px-5 py-2 rounded-full text-cyan-200 text-sm hidden" onclick="duelBackToSetup()">← Setup Baru</button>
+     </div>
+    </div>
+   </div><!-- SQUAD -->
+   <div id="screen-squad" class="screen">
+    <div class="p-4 max-w-2xl mx-auto">
+     <button onclick="showScreen('home')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+     <h2 class="text-2xl font-bold text-center mb-4 crystal-glow text-purple-100">👥 Squad Mode (4 Pemain)</h2>
+     <div id="squad-setup">
+      <p class="text-base text-slate-200 text-center mb-4">Masukkan nama &amp; pilih hero untuk setiap pemain.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4" id="squad-players-setup"></div>
+      <div class="section-card mb-4">
+       <p class="text-sm text-slate-300 mb-1">Darjah:</p><select id="squad-grade" class="setup-input mb-2"><option value="1">Darjah 1</option><option value="2">Darjah 2</option><option value="3">Darjah 3</option><option value="4">Darjah 4</option><option value="5">Darjah 5</option><option value="6">Darjah 6</option></select>
+       <p class="text-sm text-slate-300 mb-1">Subjek:</p><select id="squad-subject" class="setup-input"><option value="math">Matematik</option><option value="bm">Bahasa Melayu</option></select>
+      </div>
+      <div class="text-center">
+       <button class="neon-btn tactile-btn px-6 py-3 rounded-full text-purple-200 text-base font-bold" onclick="startSquadGame()">👥 Mula Squad!</button>
+      </div>
+     </div>
+     <div id="squad-game-area" class="hidden">
+      <div class="flex flex-wrap justify-center gap-2 mb-3" id="squad-scoreboard"></div>
+      <div class="section-card mb-2">
+       <p class="text-sm text-cyan-200 font-bold mb-1">Giliran: <span id="squad-turn-name" class="text-yellow-300"></span></p>
+       <p id="squad-question" class="text-xl font-bold text-slate-100 mb-3 text-center"></p>
+       <div id="squad-answers" class="grid grid-cols-2 gap-3"></div>
+      </div>
+      <p id="squad-result" class="text-base font-bold mt-3 text-center hidden"></p><button id="squad-back" class="neon-btn tactile-btn px-5 py-2 rounded-full text-purple-200 text-sm mt-3 hidden" onclick="squadBackToSetup()">← Setup Baru</button>
+     </div>
+    </div>
+   </div><!-- SHOP -->
+   <div id="screen-shop" class="screen">
+    <div class="p-4 max-w-lg mx-auto">
+     <button onclick="showScreen('home')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+     <h2 data-template-id="shop-title" class="canva-text text-2xl font-bold text-center mb-2" style="color: rgb(52, 211, 153); font-weight: 700; font-style: normal; font-size: 28px;">🛒 Kedai Universe</h2>
+     <p class="text-base text-center text-slate-200 mb-4">🪙 <span id="shop-coins">0</span> | 💎 <span id="shop-diamonds">0</span></p>
+     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="shop-grid"></div>
+    </div>
+   </div><!-- HERO SYSTEM -->
+   <div id="screen-hero-system" class="screen">
+    <div class="p-4 max-w-2xl mx-auto">
+     <button onclick="showScreen('home')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+     <h2 data-template-id="hero-system-title" class="canva-text text-2xl font-bold text-center mb-2 crystal-glow" style="color: rgb(0, 0, 0); font-weight: 700; font-style: normal; font-size: 28px;">🦸 Hero System</h2>
+     <p data-template-id="hero-system-intro" class="canva-text text-base text-center mb-4" style="color: rgb(255, 255, 255); font-weight: 400; font-style: normal; font-size: 22px;">Pilih hero aktif untuk bonus khas!</p>
+     <div class="grid grid-cols-3 gap-3 mb-4" id="hero-grid"></div>
+     <p class="text-center text-sm text-yellow-200 mb-3">Pilih hero, kemudian tekan Confirm Hero untuk mengaktifkannya.</p><button type="button" class="neon-btn tactile-btn w-full py-3 rounded-full bg-black border-2 border-cyan-200 text-white text-base font-black shadow-[0_0_18px_rgba(34,211,238,.55)] mb-4" onclick="confirmHeroSelection()">✅ Confirm Hero</button>
+     <div id="hero-power-box" class="section-card border border-cyan-400/60 hidden">
+      <h3 class="text-base font-black text-cyan-200 mb-2">⚡ Kuasa Hero</h3>
+      <div class="space-y-1 text-base">
+       <p class="text-slate-200"><span class="font-bold">Nama:</span> <span id="power-hero-name"></span></p>
+       <p class="text-slate-200"><span class="font-bold">Kuasa:</span> <span id="power-hero-power" class="text-yellow-300"></span></p>
+       <p class="text-slate-200"><span class="font-bold">Bonus:</span> <span id="power-hero-bonus" class="text-green-300"></span></p>
+      </div>
+     </div>
+    </div>
+   </div><!-- PET SYSTEM -->
+   <div id="screen-pet-system" class="screen">
+    <div class="p-4 max-w-2xl mx-auto">
+     <button onclick="showScreen('home')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+     <h2 data-template-id="pet-system-title" class="canva-text text-2xl font-bold text-center mb-2 crystal-glow" style="color: rgb(241, 245, 249); font-weight: 700; font-style: normal; font-size: 28px;">🐾 Pet System</h2>
+     <p data-template-id="pet-system-intro" class="canva-text text-base text-center mb-4" style="color: rgb(226, 232, 240); font-weight: 400; font-style: normal; font-size: 22px;">Pet menemani dan memberi bonus. Pilih pet aktif kamu!</p>
+     <div class="grid grid-cols-3 gap-3 mb-4" id="pet-grid"><img data-template-id="pet-blaze-jr" class="canva-image hidden" loading="lazy" src="canva://MAHQHPywckI/1" alt="Cute pink 3D space cat pet"><img data-template-id="pet-foxia" class="canva-image hidden" loading="lazy" src="canva://MAHQHDkWaGo/1" alt="Cute green 3D space explorer pet"><img data-template-id="pet-owlstar" class="canva-image hidden" loading="lazy" src="canva://MAHQHI2GUZc/1" alt="Cute orange 3D astronaut pet">
+     </div>
+     <p class="text-center text-sm text-yellow-200 mb-3">Pilih pet, kemudian tekan Confirm Pet untuk mengaktifkannya.</p><button type="button" class="neon-btn tactile-btn w-full py-3 rounded-full bg-black border-2 border-orange-200 text-white text-base font-black shadow-[0_0_18px_rgba(251,146,60,.55)]" onclick="confirmPetSelection()">✅ Confirm Pet</button>
+    </div>
+   </div><!-- PROFILE -->
+   <div id="screen-profile" class="screen">
+    <div class="p-4 max-w-2xl mx-auto">
+     <button onclick="showScreen('home')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+     <div class="section-card border-cyan-400/40 bg-gradient-to-br from-cyan-950/80 via-purple-950/80 to-fuchsia-950/80">
+      <div class="flex items-center gap-4">
+       <div class="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-cyan-400 border-2 border-cyan-200 flex items-center justify-center text-4xl shadow-lg shadow-cyan-500/30" id="profile-avatar-display">
+        🌟
+       </div>
+       <div class="flex-1">
+        <p class="text-sm uppercase tracking-widest text-cyan-200">Express Ranger</p>
+        <h2 class="text-2xl font-black text-slate-100 crystal-glow" id="profile-player-name">Express Ranger</h2>
+        <p class="text-base text-slate-200">Level <span id="profile-hub-level">1</span> · <span id="profile-hub-rank">Bronze I</span></p>
+       </div>
+      </div>
+      <div class="mt-4 bg-white/10 rounded-full overflow-hidden">
+       <div id="profile-hub-xp" class="progress-bar" style="width:0%"></div>
+      </div>
+      <p class="text-base text-cyan-200 mt-2"><span id="profile-hub-xp-text">0/100 XP</span></p>
+     </div>
+     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
+      <button class="menu-btn tactile-btn text-base" onclick="profileAction('avatar')">🖼️<br>
+        Avatar</button> <button class="menu-btn tactile-btn text-base" onclick="showScreen('hero-system')">🦸<br>
+        Hero</button> <button class="menu-btn tactile-btn text-base" onclick="showScreen('pet-system')">🐾<br>
+        Pet</button> <button class="menu-btn tactile-btn text-base" onclick="profileAction('rename')">✏️<br>
+        Nama</button> <button class="menu-btn tactile-btn text-base" onclick="profileAction('stats')">📊<br>
+        Statistik</button> <button class="menu-btn tactile-btn text-base" onclick="profileAction('achievements')">🏆<br>
+        Achievement</button> <button class="menu-btn tactile-btn text-base" onclick="profileAction('skins')">✨<br>
+        Skin</button> <button class="menu-btn tactile-btn text-base" onclick="profileAction('history')">🕘<br>
+        Sejarah</button> <button class="menu-btn tactile-btn text-base" onclick="profileAction('saveload')">💾<br>
+        Simpan</button>
+     </div>
+    </div>
+   </div>
+  </div><!-- BOTTOM NAV -->
+  <nav class="bottom-nav bg-black/90 border-t border-purple-500/30 flex justify-around items-center py-3 px-1" role="navigation" aria-label="Main navigation">
+   <button class="nav-item active flex flex-col items-center px-2 py-1 tactile-btn" onclick="navTo('home')"><span class="text-xl">🏠</span><span class="text-sm text-slate-200">Home</span></button> <button class="nav-item flex flex-col items-center px-2 py-1 tactile-btn" onclick="navTo('galaxy')"><span class="text-xl">🗺️</span><span class="text-sm text-slate-200">Galaxy</span></button> <button class="nav-item flex flex-col items-center px-2 py-1 tactile-btn" onclick="navTo('subject')"><span class="text-xl">📚</span><span class="text-sm text-slate-200">Subject</span></button> <button class="nav-item flex flex-col items-center px-2 py-1 tactile-btn" onclick="navTo('shop')"><span class="text-xl">🛒</span><span class="text-sm text-slate-200">Shop</span></button> <button class="nav-item flex flex-col items-center px-2 py-1 tactile-btn" onclick="navTo('profile')"><span class="text-xl">👤</span><span class="text-sm text-slate-200">Profile</span></button>
+  </nav>
+  <script src="/_sdk/c939c145c3c74230.editing_sdk.js" integrity="sha512-jh2pv/gl9Gzzn5dxfzwQO4wkqtnAQIim+LIUDYfVu2cdqPkQV2MqbjsDUW5IYbrSZFjRlOBrIWzlvWDXQYxOjg=="></script>
+  <div id="hero-artwork-slots" aria-hidden="true" class="hidden">
+   <img data-template-id="hero-cahaya-murni-home" class="canva-image" loading="lazy" src="canva://MAHQJUWkwgY/1" alt="Cahaya Murni learning game hero artwork"><img data-template-id="hero-cahaya-murni" class="canva-image" loading="lazy" src="canva://MAHQHhToRCk/1" alt="Cahaya Murni chibi space hero with glowing wings"> <img data-template-id="hero-luna-penyayang" class="canva-image" loading="lazy" src="canva://MAHQHpLNTNI/1" alt="Luna Penyayang space hero with a robot companion"> <img data-template-id="hero-wira-petir" class="canva-image" loading="lazy" src="canva://MAHQIoYP5IU/1" alt="Wira Petir space hero"> <img data-template-id="hero-srikandi-berani" class="canva-image" loading="lazy" src="canva://MAHQHmma97c/1" alt="Female chibi astronaut hero with glowing hair rings"> <img data-template-id="hero-cahaya-arif" class="canva-image" loading="lazy" src="canva://MAHQDcJG4PI/1" alt="Cahaya Arif space hero"> <img data-template-id="hero-sinar-harapan" class="canva-image" loading="lazy" src="canva://MAHQH8fxKGE/1" alt="Sinar Harapan space hero"> <img data-template-id="hero-bintang-mulia" class="canva-image" loading="lazy" src="canva://MAHQDRWM6n4/1" alt="Bintang Mulia space hero"> <img data-template-id="hero-ilham-bijaksana" class="canva-image" loading="lazy" src="canva://MAHQDThKgTo/1" alt="Ilham Bijaksana space hero"> <img data-template-id="hero-permata-hati" class="canva-image" loading="lazy" src="canva://MAHQDeffWKg/1" alt="Permata Hati space hero"> <img data-template-id="hero-wira-jaya" class="canva-image" loading="lazy" src="canva://MAHQDWDcWmI/1" alt="Wira Jaya space hero"> <img data-template-id="hero-nur-cemerlang" class="canva-image" loading="lazy" src="canva://MAHQImeSH0A/1" alt="Nur Cemerlang space hero"> <img data-template-id="hero-amanah-teguh" class="canva-image" loading="lazy" src="canva://MAHQDet43ro/1" alt="Amanah Teguh space hero"> <img data-template-id="hero-luhur-hati" class="canva-image" loading="lazy" src="canva://MAHQIhNIs50/1" alt="Luhur Hati space hero"> <img data-template-id="hero-cerdik-sakti" class="canva-image" loading="lazy" src="canva://MAHQDSDxMRI/1" alt="Cerdik Sakti space hero"> <img data-template-id="hero-jernih-fikir" class="canva-image" loading="lazy" src="canva://MAHQH2UyEp0/1" alt="Jernih Fikir space hero"> <img data-template-id="hero-cahaya-hikmah" class="canva-image" loading="lazy" src="canva://MAHQH0eyCtc/1" alt="Cahaya Hikmah space hero"> <img data-template-id="hero-budi-mulia" class="canva-image" loading="lazy" src="canva://MAHQH0_01U0/1" alt="Budi Mulia space hero"> <img data-template-id="hero-satria-murni" class="canva-image" loading="lazy" src="canva://MAHQIo9zsKU/1" alt="Nur Satria Murni space hero"> <img data-template-id="hero-nur-inspirasi" class="canva-image" loading="lazy" src="canva://MAHQH4vc_2A/1" alt="Nur Inspirasi space hero"> <img data-template-id="hero-gemilang-akal" class="canva-image" loading="lazy" src="canva://MAHQH0Eaod4/1" alt="Gemilang Akal space hero"> <img data-template-id="hero-harapan-jitu" class="canva-image" loading="lazy" src="canva://MAHQI5s7Aig/1" alt="Harapan Gemilang space hero"> <img data-template-id="hero-jasa-lestari" class="canva-image" loading="lazy" src="canva://MAHQIimHqk0/1" alt="Jasa Lestari space hero"> <img data-template-id="hero-aman-sentosa" class="canva-image" loading="lazy" src="canva://MAHQDacXXhc/1" alt="Aman Sentosa space hero"> <img data-template-id="hero-cita-ceria" class="canva-image" loading="lazy" src="canva://MAHQHjjFu5U/1" alt="Female chibi space hero in a green suit"> <img data-template-id="hero-pasti-bijaksana" class="canva-image" loading="lazy" src="canva://MAHQIiGHOsA/1" alt="Pasti Bijaksana space hero">
+  </div>
+  <script>
+// === BM MISSION DATA ===
+const BM_GRADES={1:{name:'Darjah 1',missions:[{name:'Dunia Huruf & Suku Kata',icon:'🔤',desc:'Mengenal huruf, suku kata terbuka dan tertutup'},{name:'Planet Membaca Awal',icon:'📖',desc:'Membaca perkataan dan ayat mudah'},{name:'Akademi Menulis Ceria',icon:'✏️',desc:'Menulis huruf, perkataan dan ayat pendek'},{name:'Zon Mendengar & Bertutur',icon:'🎤',desc:'Mendengar arahan dan bertutur dengan betul'},{name:'Dunia Tatabahasa Asas',icon:'📝',desc:'Kata nama, kata kerja, kata sifat asas'},{name:'Cabaran Pemahaman Bahasa',icon:'🧠',desc:'Memahami petikan pendek dan menjawab soalan'}]},2:{name:'Darjah 2',missions:[{name:'Galaksi Ejaan & Sebutan',icon:'🔤',desc:'Ejaan betul, sebutan baku'},{name:'Planet Membaca Lancar',icon:'📖',desc:'Membaca teks pendek dengan kelancaran'},{name:'Stesen Penulisan Kreatif',icon:'✏️',desc:'Menulis karangan pendek'},{name:'Orbit Tatabahasa',icon:'📝',desc:'Kata ganda, kata majmuk, imbuhan'},{name:'Zon Pemahaman Teks',icon:'🧠',desc:'Menjawab soalan berdasarkan petikan'},{name:'Misi Peribahasa Muda',icon:'🌟',desc:'Peribahasa dan simpulan bahasa mudah'}]},3:{name:'Darjah 3',missions:[{name:'Dunia Imbuhan Mantap',icon:'🔤',desc:'Imbuhan awalan, akhiran dan apitan'},{name:'Planet Karangan Bergambar',icon:'📖',desc:'Menulis karangan berdasarkan gambar'},{name:'Stesen Tatabahasa Pro',icon:'📝',desc:'Kata hubung, kata seru, kata tanya'},{name:'Galaksi Peribahasa',icon:'🌟',desc:'Peribahasa, bidalan dan simpulan bahasa'},{name:'Orbit Pemahaman Lanjutan',icon:'🧠',desc:'Memahami pelbagai jenis teks'},{name:'Misi Penulisan Surat',icon:'✏️',desc:'Surat kiriman tidak rasmi dan rasmi'}]},4:{name:'Darjah 4',missions:[{name:'Galaksi Morfologi',icon:'🔤',desc:'Kata terbitan, kata ganda, golongan kata'},{name:'Planet Sintaksis',icon:'📝',desc:'Ayat tunggal, ayat majmuk, cakap ajuk'},{name:'Stesen Karangan Panjang',icon:'✏️',desc:'Karangan jenis fakta dan imaginatif'},{name:'Orbit Komsas Awal',icon:'📖',desc:'Pantun, sajak, cerita rakyat'},{name:'Zon Pemahaman KBAT',icon:'🧠',desc:'Soalan aras tinggi'},{name:'Misi Peribahasa Lanjutan',icon:'🌟',desc:'Peribahasa, perumpamaan dan bidalan'}]},5:{name:'Darjah 5',missions:[{name:'Galaksi Tatabahasa Tinggi',icon:'📝',desc:'Ayat aktif/pasif, penjodoh bilangan'},{name:'Planet Penulisan Kreatif',icon:'✏️',desc:'Karangan naratif dan deskriptif'},{name:'Stesen Komsas',icon:'📖',desc:'Novel, cerpen, puisi moden'},{name:'Orbit Pemahaman Tinggi',icon:'🧠',desc:'Analisis teks, rumusan'},{name:'Zon Peribahasa Master',icon:'🌟',desc:'Peribahasa dan ungkapan tinggi'},{name:'Misi Penulisan Rasmi',icon:'🔤',desc:'Surat rasmi, laporan'}]},6:{name:'Darjah 6',missions:[{name:'Galaksi Tatabahasa UPSR',icon:'📝',desc:'Semua aspek tatabahasa'},{name:'Planet Penulisan UPSR',icon:'✏️',desc:'Karangan respons terbuka'},{name:'Stesen Pemahaman UPSR',icon:'🧠',desc:'Petikan dan soalan peperiksaan'},{name:'Orbit Komsas & Sastera',icon:'📖',desc:'Apresiasi sastera'},{name:'Zon Peribahasa & Simpulan',icon:'🌟',desc:'Koleksi lengkap peribahasa'},{name:'Misi Cabaran Bahasa',icon:'🔤',desc:'Ejaan, tanda baca'}]}};
+
+function genBMMission(grade,missionIdx){const qs=[];function r(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+const bmData={1:[[()=>{const sk=[['ba','bu','bi','bo'],['ka','ku','ki','ko'],['ma','mu','mi','mo']];const s=sk[r(0,2)];const idx=r(0,3);return{q:`Suku kata "${s[idx]}" bermula dengan huruf?`,a:[s[idx][0],'z','x','q'],c:0}},()=>{const words=[['buku','bu-ku'],['meja','me-ja'],['kuda','ku-da']];const w=words[r(0,2)];return{q:`Berapa suku kata dalam "${w[0]}"?`,a:['2','1','3','4'],c:0}}],[()=>{const pairs=[['kucing','haiwan'],['kereta','kenderaan'],['bunga','tumbuhan']];const p=pairs[r(0,2)];return{q:`"${p[0]}" ialah sejenis...`,a:[p[1],'warna','nombor','tempat'],c:0}}],[()=>{const q2=[['Huruf besar untuk nama khas?','Ya'],['Noktah di hujung ayat?','Ya']];const x=q2[r(0,1)];return{q:x[0],a:[x[1],'Tidak','Mungkin','Kadang-kadang'],c:0}}],[()=>{const greet=[['Selamat pagi','pagi'],['Selamat petang','petang']];const g=greet[r(0,1)];return{q:`Ucapan untuk waktu ${g[1]}?`,a:[g[0],'Terima kasih','Maaf','Tolong'],c:0}}],[()=>{const kn=['kucing','meja','buku','pokok'];const w=kn[r(0,3)];return{q:`"${w}" ialah kata...`,a:['Nama','Kerja','Sifat','Hubung'],c:0}}],[()=>{const lawan=[['besar','kecil'],['tinggi','rendah'],['panjang','pendek']];const l=lawan[r(0,2)];return{q:`Lawan "${l[0]}"?`,a:[l[1],l[0],'sama','cantik'],c:0}}]],2:[[()=>{const words=['sekolah','kereta','hospital'];const w=words[r(0,2)];return{q:`Ejaan "${w}" — betul?`,a:['Ya','Tidak','Mungkin','Salah'],c:0}}],[()=>({q:'Membaca lancar bermaksud?',a:['Tanpa teragak-agak','Cepat sahaja','Kuat','Perlahan'],c:0})],[()=>({q:'Karangan pendek perlu ada?',a:['Pendahuluan, isi, penutup','Nombor sahaja','Gambar sahaja','Tiada'],c:0})],[()=>{const kg=[['buku-buku','penuh'],['sayur-mayur','separa']];const k=kg[r(0,1)];return{q:`"${k[0]}" kata ganda jenis?`,a:[k[1],'berentak','semu','tiada'],c:0}}],[()=>{const q2=[['Burung itu terbang tinggi. Apa yang terbang?','Burung'],['Adik menangis kerana jatuh. Mengapa?','Kerana jatuh']];const x=q2[r(0,1)];return{q:x[0],a:[x[1],'Kereta','Makan','Tidur'],c:0}}],[()=>{const pb=[['Bagai aur dengan tebing','Saling membantu'],['Seperti kacang lupakan kulit','Lupa jasa']];const p=pb[r(0,1)];return{q:`"${p[0]}" bermaksud?`,a:[p[1],'Berlari','Makan','Tidur'],c:0}}]],3:[[()=>{const imb=[['peN+tulis','penulis'],['meN+masak','memasak']];const i=imb[r(0,1)];return{q:`Imbuhan: ${i[0]} = ?`,a:[i[1],'pentulis','bertidur','menjual'],c:0}}],[()=>({q:'Karangan bergambar ditulis berdasarkan?',a:['Gambar yang diberi','Nombor','Lagu','Warna'],c:0})],[()=>{const kh=[['dan','kata hubung'],['wah','kata seru']];const k=kh[r(0,1)];return{q:`"${k[0]}" ialah?`,a:[k[1],'kata nama','kata kerja','kata sifat'],c:0}}],[()=>{const pb=[['Harimau mati meninggalkan belang','Nama baik kekal'],['Seperti katak di bawah tempurung','Tidak tahu dunia luar']];const p=pb[r(0,1)];return{q:`"${p[0]}" bermaksud?`,a:[p[1],'Gembira','Kaya','Pandai'],c:0}}],[()=>({q:'Soalan pemahaman memerlukan rujukan?',a:['Petikan/teks','Imaginasi','Nombor','Gambar sahaja'],c:0})],[()=>({q:'Surat tidak rasmi ditujukan kepada?',a:['Keluarga/rakan','Pengetua','Menteri','Syarikat'],c:0})]],4:[[()=>{const kt=[['pelari','pe+lari'],['keindahan','ke+indah+an']];const k=kt[r(0,1)];return{q:`"${k[0]}" terdiri daripada?`,a:[k[1],'tiada imbuhan','me+kan','ber+an'],c:0}}],[()=>{const at=[['Ani makan nasi.','tunggal'],['Ali makan dan minum.','majmuk']];const a=at[r(0,1)];return{q:`"${a[0]}" — ayat?`,a:[a[1],'tanya','seru','perintah'],c:0}}],[()=>({q:'Karangan fakta menggunakan?',a:['Maklumat benar','Imaginasi','Dongeng','Puisi'],c:0})],[()=>({q:'Pantun mempunyai berapa baris?',a:['4 baris','2 baris','6 baris','8 baris'],c:0})],[()=>({q:'Soalan KBAT memerlukan pemikiran?',a:['Aras tinggi','Hafalan','Meniru','Menyalin'],c:0})],[()=>{const pb=[['Berat mata memandang','Berat hati menanggung']];return{q:`Lengkapkan: "${pb[0][0]}, ___"`,a:[pb[0][1],'makan nasi','pergi sekolah','tidur awal'],c:0}}]],5:[[()=>{const ap=[['Buku dibaca oleh Ali.','pasif'],['Ali membaca buku.','aktif']];const a=ap[r(0,1)];return{q:`"${a[0]}" — ayat?`,a:[a[1],'tanya','seru','perintah'],c:0}}],[()=>({q:'Karangan naratif mengandungi?',a:['Watak, plot, latar','Nombor sahaja','Fakta sains','Jadual'],c:0})],[()=>({q:'Novel dan cerpen tergolong dalam?',a:['Prosa','Puisi','Drama','Pantun'],c:0})],[()=>({q:'Rumusan memerlukan?',a:['Isi penting','Nombor','Ejaan salah','Gambar'],c:0})],[()=>{const pb=[['Buah mulut','Bahan perbualan'],['Kaki bangku','Pemalas']];const p=pb[r(0,1)];return{q:`"${p[0]}" bermaksud?`,a:[p[1],'Gembira','Lapar','Pandai'],c:0}}],[()=>({q:'Surat rasmi ditujukan kepada?',a:['Pihak berkuasa','Kawan','Adik','Nenek'],c:0})]],6:[[()=>{const q2=[['meN+pukul → memukul','Betul'],['beR+jalan → berjalan','Betul']];const x=q2[r(0,1)];return{q:`${x[0]}. Betul?`,a:[x[1],'Salah','Mungkin','Tiada'],c:0}}],[()=>({q:'Karangan respons terbuka memberi kebebasan?',a:['Menulis isi sendiri','Menyalin','Melukis','Mengira'],c:0})],[()=>({q:'Soalan pemahaman peperiksaan memerlukan?',a:['Rujukan petikan','Hafalan','Lukisan','Nyanyian'],c:0})],[()=>({q:'Apresiasi sastera bermaksud?',a:['Menghargai karya','Mengira','Melukis','Bermain'],c:0})],[()=>{const pb=[['Yang bulat tidak datang bergolek','Usaha diperlukan'],['Ringan tulang','Rajin bekerja']];const p=pb[r(0,1)];return{q:`"${p[0]}" bermaksud?`,a:[p[1],'Malas','Lapar','Takut'],c:0}}],[()=>{const q2=[['perubahan','betul'],['perubhan','salah']];const x=q2[r(0,1)];return{q:`Ejaan "${x[0]}" — ?`,a:[x[1],'mungkin','tiada','lain'],c:0}}]]};
+const templates=bmData[grade]?bmData[grade][missionIdx]||bmData[grade][0]:bmData[1][0];for(let i=0;i<100;i++)qs.push(templates[i%templates.length]());return qs}
+
+// === MATH DATA ===
+const MATH_GRADES={1:{name:'Darjah 1',missions:[{name:'Dunia Nombor Asas',icon:'🪐',desc:'Mengenal nombor 1-100'},{name:'Kuasa Tambah & Tolak',icon:'⚙️',desc:'Operasi dalam lingkungan 100'},{name:'Dunia Wang Pertama',icon:'💰',desc:'Mengenal wang'},{name:'Pengembaraan Masa',icon:'⏰',desc:'Waktu, hari, bulan'},{name:'Planet Bentuk & Ruang',icon:'📐',desc:'Bentuk 2D dan 3D'},{name:'Misi Pemikiran Matematik',icon:'🧠',desc:'Pola nombor'}]},2:{name:'Darjah 2',missions:[{name:'Nombor Hingga 1000',icon:'🪐',desc:'Nilai tempat'},{name:'Operasi Asas Mantap',icon:'⚙️',desc:'Tambah & tolak'},{name:'Pendaraban & Pembahagian',icon:'✖️',desc:'Sifir 2-5'},{name:'Ukuran & Sukatan',icon:'📏',desc:'Panjang, jisim'},{name:'Wang & Simpanan',icon:'💰',desc:'Operasi wang'},{name:'Data & Piktograf',icon:'📊',desc:'Mengumpul data'}]},3:{name:'Darjah 3',missions:[{name:'Nombor Hingga 10 000',icon:'🪐',desc:'Nilai tempat, bundar'},{name:'Operasi Bergabung',icon:'⚙️',desc:'Tambah, tolak, darab, bahagi'},{name:'Pecahan Asas',icon:'🍕',desc:'Pecahan wajar'},{name:'Ukuran Lanjutan',icon:'📏',desc:'Penukaran unit'},{name:'Wang & Pengurusan',icon:'💰',desc:'Belanjawan'},{name:'Geometri & Perimeter',icon:'📐',desc:'Perimeter, simetri'}]},4:{name:'Darjah 4',missions:[{name:'Nombor Hingga 100 000',icon:'🪐',desc:'Pembundaran'},{name:'Operasi Lanjutan',icon:'⚙️',desc:'Darab & bahagi'},{name:'Pecahan & Perpuluhan',icon:'🍕',desc:'Nombor bercampur'},{name:'Peratus & Nisbah',icon:'📊',desc:'Konsep peratus'},{name:'Ukuran & Luas',icon:'📐',desc:'Luas, isipadu'},{name:'KBAT',icon:'🧠',desc:'Penaakulan'}]},5:{name:'Darjah 5',missions:[{name:'Nombor Besar',icon:'🪐',desc:'Hingga 1 juta'},{name:'Pecahan Lanjutan',icon:'🍕',desc:'Operasi pecahan'},{name:'Peratus & Aplikasi',icon:'📊',desc:'Diskaun, untung rugi'},{name:'Nisbah & Kadaran',icon:'⚖️',desc:'Nisbah setara'},{name:'Geometri Koordinat',icon:'📐',desc:'Koordinat, sudut'},{name:'Statistik',icon:'🎲',desc:'Min, mod'}]},6:{name:'Darjah 6',missions:[{name:'Integer',icon:'🪐',desc:'Nombor negatif'},{name:'Pecahan Perpuluhan Peratus',icon:'🍕',desc:'Penukaran'},{name:'Nisbah Lanjutan',icon:'⚖️',desc:'Kadar, skala'},{name:'Algebra Asas',icon:'🔤',desc:'Persamaan'},{name:'Geometri & Transformasi',icon:'📐',desc:'Bulatan, isipadu'},{name:'KBAT & Penaakulan',icon:'🧠',desc:'Masalah bukan rutin'}]}};
+
+function genMathMission(grade,missionIdx){const qs=[];function r(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+const generators={1:[[()=>{const n=r(1,99);return{q:`Nombor selepas ${n}?`,a:[''+(n+1),''+(n-1),''+(n+2),''+n],c:0}}],[()=>{const a=r(1,50),b=r(1,50);return{q:`${a} + ${b} = ?`,a:[''+(a+b),''+(a+b+1),''+(a+b-1),''+(a-b)],c:0}}],[()=>{const coins=[5,10,20,50];const c=coins[r(0,3)];return{q:`Syiling ${c} sen = berapa sen?`,a:[''+c,''+(c+10),''+(c-5),'100'],c:0}}],[()=>{const h=r(1,12);return{q:`Jarum pendek di ${h}. Pukul?`,a:[h+':00',(h+1)+':00',h+':30','12:00'],c:0}}],[()=>{const shapes=[['segi empat sama','4 sisi sama'],['segi tiga','3 sisi'],['bulatan','tiada sisi lurus']];const s=shapes[r(0,2)];return{q:`${s[0]} mempunyai?`,a:[s[1],'5 sisi','1 sisi','6 sisi'],c:0}}],[()=>{const start=r(1,10),step=r(1,5);return{q:`Pola: ${start}, ${start+step}, ${start+step*2}, ?`,a:[''+(start+step*3),''+(start+step*4),''+(start+step*2),''+start],c:0}}]],2:[[()=>{const n=r(100,999);return{q:`Digit ratus dalam ${n}?`,a:[''+Math.floor(n/100),''+(n%10),''+n,'0'],c:0}}],[()=>{const a=r(50,400),b=r(50,400);return{q:`${a} + ${b} = ?`,a:[''+(a+b),''+(a+b+10),''+(a+b-10),''+(a-b)],c:0}}],[()=>{const a=r(2,5),b=r(2,9);return{q:`${a} × ${b} = ?`,a:[''+(a*b),''+(a*b+a),''+(a+b),''+(a*b-1)],c:0}}],[()=>{const cm=r(1,9)*100;return{q:`${cm} cm = ? m`,a:[''+(cm/100),''+(cm*100),''+cm,''+(cm/10)],c:0}}],[()=>{const price=r(1,20),pay=price+r(1,10);return{q:`Harga RM${price}. Bayar RM${pay}. Baki?`,a:['RM'+(pay-price),'RM'+(pay+price),'RM'+price,'RM'+pay],c:0}}],[()=>{const n=r(3,8),each=r(1,5);return{q:`Piktograf: 1 gambar = ${each}. ${n} gambar = ?`,a:[''+(n*each),''+n,''+each,''+(n+each)],c:0}}]],3:[[()=>{const n=r(1000,9999);return{q:`Bundarkan ${n} kepada ribu terdekat.`,a:[''+Math.round(n/1000)*1000,''+n,''+(Math.ceil(n/100)*100),'0'],c:0}}],[()=>{const a=r(10,99),b=r(2,9);return{q:`${a} × ${b} = ?`,a:[''+(a*b),''+(a*b+b),''+(a+b),''+(a*b-a)],c:0}}],[()=>{const d=r(2,8),n=r(1,d-1);return{q:`Yang lebih besar: ${n}/${d} atau 1/${d}?`,a:[`${n}/${d}`,`1/${d}`,'sama','0'],c:0}}],[()=>{const km=r(1,9);return{q:`${km} km = ? m`,a:[''+(km*1000),''+(km*100),''+km,''+(km*10)],c:0}}],[()=>{const cost=r(10,50),sell=cost+r(5,20);return{q:`Kos RM${cost}, jual RM${sell}. Untung?`,a:['RM'+(sell-cost),'RM'+(sell+cost),'RM'+cost,'RM'+sell],c:0}}],[()=>{const l=r(3,12),w=r(2,10);return{q:`Perimeter segi empat ${l}cm × ${w}cm?`,a:[''+(2*(l+w))+' cm',''+(l*w)+' cm',''+(l+w)+' cm',''+(4*l)+' cm'],c:0}}]],4:[[()=>{const a=r(10000,50000),b=r(10000,50000);return{q:`${a.toLocaleString()} + ${b.toLocaleString()} = ?`,a:[(a+b).toLocaleString(),(a+b+100).toLocaleString(),(a-b).toLocaleString(),(a+b-100).toLocaleString()],c:0}}],[()=>{const a=r(100,999),b=r(2,12);return{q:`${a} × ${b} = ?`,a:[''+(a*b),''+(a*b+b),''+(a+b),''+(a*b-a)],c:0}}],[()=>{const d=r(2,10),n1=r(1,d-1),n2=r(1,d-1);const s=n1+n2;return{q:`${n1}/${d} + ${n2}/${d} = ?`,a:[s>=d?`1 ${s-d}/${d}`:`${s}/${d}`,`${n1*n2}/${d}`,`${s}/${d*2}`,`${n1}/${d}`],c:0}}],[()=>{const pct=[10,20,25,50][r(0,3)];const val=r(2,20)*10;return{q:`${pct}% daripada ${val} = ?`,a:[''+(val*pct/100),''+(val+pct),''+val,''+pct],c:0}}],[()=>{const l=r(3,15),w=r(2,10);return{q:`Luas ${l}cm × ${w}cm = ?`,a:[`${l*w} cm²`,`${2*(l+w)} cm²`,`${l+w} cm²`,`${l*w+l} cm²`],c:0}}],[()=>{const speed=r(40,80),time=r(2,5);return{q:`${speed} km/j × ${time} jam = ?`,a:[`${speed*time} km`,`${speed+time} km`,`${speed} km`,`${speed*time+speed} km`],c:0}}]],5:[[()=>{const a=r(100000,500000),b=r(100000,500000);return{q:`${a.toLocaleString()} + ${b.toLocaleString()} = ?`,a:[(a+b).toLocaleString(),(a+b+1000).toLocaleString(),(a-b).toLocaleString(),(a+b-100).toLocaleString()],c:0}}],[()=>{const v1=r(1,90)/10,v2=r(1,90)/10;return{q:`${v1.toFixed(1)} + ${v2.toFixed(1)} = ?`,a:[(v1+v2).toFixed(1),(v1+v2+0.1).toFixed(1),(v1*v2).toFixed(1),(v1-v2).toFixed(1)],c:0}}],[()=>{const price=r(50,500),disc=[10,15,20,25,30][r(0,4)];const pay=Math.round(price*(100-disc)/100);return{q:`RM${price} diskaun ${disc}%. Bayar?`,a:['RM'+pay,'RM'+price,'RM'+(price-pay),'RM'+(pay+10)],c:0}}],[()=>{const a=r(2,10),b=r(2,10);function gcd(x,y){return y?gcd(y,x%y):x}const g=gcd(a,b);return{q:`Permudahkan ${a}:${b}`,a:[`${a/g}:${b/g}`,`${b/g}:${a/g}`,`${a}:${b}`,'1:1'],c:0}}],[()=>{const ang=r(20,80);return{q:`Sudut pelengkap ${ang}° = ?`,a:[''+(90-ang)+'°',''+(180-ang)+'°',''+ang+'°','90°'],c:0}}],[()=>{const nums=Array.from({length:5},()=>r(1,20));const avg=(nums.reduce((a,b)=>a+b)/5).toFixed(1);return{q:`Min ${nums.join(', ')} = ?`,a:[avg,(parseFloat(avg)+1).toFixed(1),''+nums.reduce((a,b)=>a+b),''+Math.max(...nums)],c:0}}]],6:[[()=>{const a=r(-10,-1),b=r(1,10);return{q:`${a} + ${b} = ?`,a:[''+(a+b),''+(a-b),''+(-a+b),''+(-a-b)],c:0}}],[()=>{const pct=[25,50,75,20][r(0,3)];function gcd(x,y){return y?gcd(y,x%y):x}const g=gcd(pct,100);return{q:`${pct}% = pecahan?`,a:[`${pct/g}/${100/g}`,`${pct}/10`,`1/${pct}`,'1/2'],c:0}}],[()=>{const a=r(2,8),b=r(2,8),k=r(2,5);return{q:`${a}:${b} = ${a*k}:?`,a:[''+(b*k),''+b,''+(a*k),''+k],c:0}}],[()=>{const a=r(2,10),ans=r(1,20);return{q:`${a}x = ${a*ans}. x = ?`,a:[''+ans,''+(a*ans),''+a,''+(ans+1)],c:0}}],[()=>{const rad=r(2,10);return{q:`Lilitan bulatan jejari ${rad} cm? (π≈3.14)`,a:[(2*3.14*rad).toFixed(1)+' cm',(3.14*rad*rad).toFixed(1)+' cm²',''+(2*rad)+' cm',''+rad+' cm'],c:0}}],[()=>{const price=r(50,200),qty=r(2,5),disc=r(10,30);const total=price*qty;const pay=Math.round(total*(100-disc)/100);return{q:`${qty}×RM${price}, diskaun ${disc}%. Bayar?`,a:['RM'+pay,'RM'+total,'RM'+(total-pay),'RM'+(pay+50)],c:0}}]]};
+const templates=generators[grade]?generators[grade][missionIdx]||generators[grade][0]:generators[1][0];for(let i=0;i<100;i++)qs.push(templates[i%templates.length]());return qs}
+
+// === GAME STATE ===
+let GS=loadState()||{coins:100,diamonds:10,energy:30,maxEnergy:30,xp:0,level:1,xpToNext:100,streakDay:0,stagesCompleted:0,activeHero:0,activePet:0,selectedHero:0,selectedPet:0,quizHeroSelected:false,unlockedHeroes:[0],heroLevels:Array(35).fill(1),petLevels:[1,1,1],totalCorrect:0,totalBattlesWon:0,hints:3,xpBoostLeft:0,lastStreakDate:null,dailyCorrect:0,dailyStagesWon:0,dailyBattlesWon:0,achievements:[],equipment:{},playerName:'Express Ranger',activeFrame:0,skinsOwned:[],unlockedPlanets:[],gameHistory:[]};
+function saveState(){try{localStorage.setItem('jeu3',JSON.stringify(GS))}catch(e){}}
+function loadState(){try{const d=localStorage.getItem('jeu3');return d?JSON.parse(d):null}catch(e){return null}}
+
+// === LOADING ===
+const tips=['💡 Setiap misi ada 100 soalan!','💡 15 saat untuk jawab!','💡 Combo beri bonus coin!','💡 Pilih darjah dan misi!'];
+document.getElementById('loading-tip').textContent=tips[Math.floor(Math.random()*tips.length)];
+setTimeout(()=>{document.getElementById('loading-screen').classList.add('fade-out');setTimeout(()=>document.getElementById('loading-screen').style.display='none',500)},1500);
+
+// === STARFIELD ===
+(function(){const sf=document.getElementById('starfield');for(let i=0;i<60;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.setProperty('--dur',(Math.random()*3+2)+'s');const sz=(Math.random()*2.5+.5)+'px';s.style.width=s.style.height=sz;sf.appendChild(s)}for(let i=0;i<2;i++){const ss=document.createElement('div');ss.className='shooting-star';ss.style.top=Math.random()*40+'%';ss.style.right=Math.random()*30+'%';ss.style.animationDelay=(Math.random()*8+i*5)+'s';sf.appendChild(ss)}})();
+
+// === TOAST ===
+function showToast(msg,type='info'){const t=document.createElement('div');t.className='toast';const bg=type==='success'?'bg-green-800 border border-green-500 text-green-100':type==='error'?'bg-red-900 border border-red-500 text-red-100':'bg-purple-900 border border-purple-500 text-purple-100';t.classList.add(...bg.split(' '));t.textContent=msg;document.getElementById('toast-container').appendChild(t);setTimeout(()=>t.remove(),2500)}
+
+// === HEROES & PETS ===
+const heroes=[
+{name:'Cahaya Murni',emoji:'🌟',bonus:'+5% XP',cost:0},{name:'Srikandi Berani',emoji:'🔥',bonus:'+10% Coin',cost:300},{name:'Luna Penyayang',emoji:'🌙',bonus:'-2 penalti',cost:350},{name:'Harapan Gemilang',emoji:'🌀',bonus:'+1 Life',cost:400},{name:'Wira Petir',emoji:'🪶',bonus:'+1 Hint',cost:450},{name:'Cahaya Arif',emoji:'✦',bonus:'Reveal Hint',cost:500},{name:'Sinar Harapan',emoji:'◇',bonus:'Second Chance',cost:550},{name:'Bintang Mulia',emoji:'✧',bonus:'Bonus Coins',cost:600},{name:'Wira Jaya',emoji:'⚔️',bonus:'Battle Strike',cost:700},{name:'Nur Cemerlang',emoji:'☀️',bonus:'Time Boost',cost:750},{name:'Amanah Teguh',emoji:'⬡',bonus:'Shield Guard',cost:800},{name:'Luhur Hati',emoji:'♡',bonus:'Calm Aura',cost:850},{name:'Cerdik Sakti',emoji:'◈',bonus:'50:50',cost:900},{name:'Jernih Fikir',emoji:'◎',bonus:'Logic Lens',cost:950},{name:'Permata Hati',emoji:'◇',bonus:'Heartlight',cost:1000},{name:'Cahaya Hikmah',emoji:'✦',bonus:'Petunjuk Cerdas',cost:1050},{name:'Budi Mulia',emoji:'✧',bonus:'Semangat',cost:1100},{name:'Satria Murni',emoji:'⚔️',bonus:'Perisai',cost:1150},{name:'Nur Inspirasi',emoji:'☼',bonus:'Ilham Cepat',cost:1200},{name:'Gemilang Akal',emoji:'◈',bonus:'Fokus Tajam',cost:1250},{name:'Harapan Jitu',emoji:'♡',bonus:'Cuba Lagi',cost:1300},{name:'Jasa Lestari',emoji:'★',bonus:'Bonus Syiling',cost:1350},{name:'Aman Sentosa',emoji:'⬡',bonus:'Guard Tenang',cost:1400},{name:'Cita Ceria',emoji:'☀️',bonus:'Joy Boost',cost:1450},{name:'Pasti Bijaksana',emoji:'◎',bonus:'Scan Jawapan',cost:1500}
+];
+const pets=[{name:'Blaze Jr.',emoji:'🐉',imageId:'pet-blaze-jr',bonus:'+5% XP'},{name:'Foxia',emoji:'🦊',imageId:'pet-foxia',bonus:'+5% Coin'},{name:'Owlstar',emoji:'🦉',imageId:'pet-owlstar',bonus:'+1 Hint'}];
+const ranks=[{name:'Bronze I',min:0},{name:'Bronze II',min:10},{name:'Silver I',min:25},{name:'Silver II',min:50},{name:'Gold I',min:80},{name:'Gold II',min:120},{name:'Platinum',min:170},{name:'Diamond',min:230},{name:'Master',min:300},{name:'Galaxy',min:400}];
+function getRankName(){let rk='Bronze I';for(const r2 of ranks)if(GS.totalCorrect>=r2.min)rk=r2.name;return rk}
+function getRankIdx(){let idx=0;for(let i=0;i<ranks.length;i++)if(GS.totalCorrect>=ranks[i].min)idx=i;return idx}
+
+// === 20 GALAXY PLANETS ===
+const galaxyPlanets=[
+{name:'Galaksi Permulaan',icon:'🌍',gradient:'from-green-500 to-emerald-600',desc:'Tempat bermula pengembaraan',unlock:'Sentiasa terbuka',check:()=>true},
+{name:'Kristal Biru',icon:'💎',gradient:'from-blue-500 to-cyan-400',desc:'Dunia kristal berkilau',unlock:'Level 3+',check:()=>GS.level>=3},
+{name:'Nebula Neon',icon:'🌌',gradient:'from-pink-500 to-purple-600',desc:'Galaksi cahaya neon',unlock:'Rank Silver+',check:()=>getRankIdx()>=2},
+{name:'Aurora Emas',icon:'👑',gradient:'from-yellow-400 to-amber-600',desc:'Dunia mahkota emas',unlock:'5000+ Coin',check:()=>GS.coins>=5000},
+{name:'Quantum Void',icon:'🔮',gradient:'from-indigo-600 to-violet-800',desc:'Dimensi kuantum misteri',unlock:'10 Hero dibuka',check:()=>(GS.unlockedHeroes||[]).length>=10},
+{name:'Frostfire',icon:'❄️',gradient:'from-cyan-300 to-blue-700',desc:'Dunia ais dan api',unlock:'5 Achievement',check:()=>(GS.achievements||[]).length>=5},
+{name:'Nova Streak',icon:'☄️',gradient:'from-orange-500 to-red-600',desc:'Bintang jatuh legendari',unlock:'Streak 7 hari',check:()=>GS.streakDay>=7},
+{name:'Galaksi Berlian',icon:'💠',gradient:'from-sky-400 to-indigo-500',desc:'Dunia berlian tak terhingga',unlock:'50 Diamond',check:()=>GS.diamonds>=50},
+{name:'Planet Magma',icon:'🌋',gradient:'from-red-600 to-orange-500',desc:'Planet teras berapi',unlock:'Level 5+',check:()=>GS.level>=5},
+{name:'Hutan Bintang',icon:'🌳',gradient:'from-lime-500 to-green-700',desc:'Hutan bercahaya ajaib',unlock:'3 Pet aktif',check:()=>true&&GS.level>=4},
+{name:'Lautan Kosmik',icon:'🌊',gradient:'from-blue-600 to-teal-500',desc:'Lautan tanpa dasar',unlock:'100 Soalan betul',check:()=>GS.totalCorrect>=100},
+{name:'Galaksi Pelangi',icon:'🌈',gradient:'from-rose-400 to-violet-500',desc:'Dunia warna-warni',unlock:'10 Misi selesai',check:()=>GS.stagesCompleted>=10},
+{name:'Planet Permata',icon:'💍',gradient:'from-fuchsia-500 to-pink-600',desc:'Permata tersembunyi',unlock:'5 Skin dimiliki',check:()=>(GS.skinsOwned||[]).length>=5},
+{name:'Nebula Emas',icon:'⭐',gradient:'from-amber-400 to-yellow-600',desc:'Nebula bersinar emas',unlock:'Level 7+',check:()=>GS.level>=7},
+{name:'Galaksi Gelap',icon:'🕳️',gradient:'from-gray-800 to-slate-900',desc:'Misteri kegelapan',unlock:'Rank Gold+',check:()=>getRankIdx()>=4},
+{name:'Planet Kaca',icon:'🪟',gradient:'from-slate-300 to-blue-200',desc:'Dunia telus dan rapuh',unlock:'15 Hero dibuka',check:()=>(GS.unlockedHeroes||[]).length>=15},
+{name:'Supernova',icon:'💥',gradient:'from-yellow-500 to-red-500',desc:'Letupan bintang gergasi',unlock:'200 Soalan betul',check:()=>GS.totalCorrect>=200},
+{name:'Galaksi Muzik',icon:'🎵',gradient:'from-violet-500 to-fuchsia-400',desc:'Dunia harmoni kosmik',unlock:'Streak 14 hari',check:()=>GS.streakDay>=14},
+{name:'Planet Infiniti',icon:'♾️',gradient:'from-emerald-500 to-cyan-600',desc:'Dunia tanpa sempadan',unlock:'Level 10+',check:()=>GS.level>=10},
+{name:'Galaksi Legenda',icon:'🏆',gradient:'from-amber-500 to-rose-500',desc:'Hanya untuk legenda!',unlock:'Rank Master+',check:()=>getRankIdx()>=8}
+];
+
+function renderGalaxyPlanets(){
+const grid=document.getElementById('galaxy-planets');grid.innerHTML='';
+galaxyPlanets.forEach((p,i)=>{
+const unlocked=p.check();
+const card=document.createElement('div');
+card.className=`galaxy-card ${unlocked?'':'planet-locked'}`;
+card.innerHTML=`<div class="text-3xl mb-2">${unlocked?p.icon:'🔒'}</div><p class="text-sm font-bold text-slate-100">${p.name}</p><p class="text-xs mt-1 ${unlocked?'text-slate-300':'text-slate-400'}">${unlocked?p.desc:p.unlock}</p>${unlocked?'<p class="text-xs text-green-400 mt-1">✅ Dibuka</p>':''}`;
+if(unlocked)card.onclick=()=>showToast('🌟 Selamat datang ke '+p.name+'!','success');
+grid.appendChild(card);
+});
+}
+
+// === SHOP ===
+const shopItems=[
+{name:'Energy x10',icon:'⚡',price:'💎30',coinCost:0,diamondCost:30,effect:'Tambah 10 energy'},
+{name:'2x XP Boost',icon:'⭐',price:'💎50',coinCost:0,diamondCost:50,effect:'5 soalan XP berganda'},
+{name:'Hint Pack x5',icon:'💡',price:'🪙500',coinCost:500,diamondCost:0,effect:'5 hint tambahan'},
+{name:'Starblade',icon:'⚔️',price:'🪙500',coinCost:500,diamondCost:0,effect:'Senjata kosmetik'},
+{name:'Cosmic Shield',icon:'🛡️',price:'🪙800',coinCost:800,diamondCost:0,effect:'Lindung 1 salah'},
+{name:'Time Crystal',icon:'⏳',price:'💎40',coinCost:0,diamondCost:40,effect:'+5 saat'},
+{name:'Nebula Skin',icon:'🌌',price:'🪙1200',coinCost:1200,diamondCost:0,effect:'Skin nebula'},
+{name:'Golden Frame',icon:'🖼️',price:'💎80',coinCost:0,diamondCost:80,effect:'Bingkai emas'},
+{name:'Lucky Charm',icon:'🍀',price:'🪙600',coinCost:600,diamondCost:0,effect:'15% bonus coin'},
+{name:'Diamond Shard',icon:'💠',price:'🪙2000',coinCost:2000,diamondCost:0,effect:'Tukar 5 Diamond'}
+];
+function renderShop(){
+const grid=document.getElementById('shop-grid');grid.innerHTML='';
+document.getElementById('shop-coins').textContent=GS.coins.toLocaleString();
+document.getElementById('shop-diamonds').textContent=GS.diamonds;
+shopItems.forEach((item,i)=>{const d=document.createElement('div');d.className='shop-item tactile-btn';d.innerHTML=`<div class="text-3xl mb-1">${item.icon}</div><p class="text-sm font-bold text-slate-100">${item.name}</p><p class="text-xs text-slate-300 mt-1">${item.effect}</p><p class="text-sm text-yellow-300 font-bold mt-1">${item.price}</p>`;d.onclick=()=>buyShopItem(i);grid.appendChild(d)});
+}
+function buyShopItem(idx){
+const item=shopItems[idx];
+if(item.coinCost>0&&GS.coins<item.coinCost){showToast('Coin tidak cukup!','error');return}
+if(item.diamondCost>0&&GS.diamonds<item.diamondCost){showToast('Diamond tidak cukup!','error');return}
+GS.coins-=item.coinCost;GS.diamonds-=item.diamondCost;
+if(item.name==='Energy x10')GS.energy=Math.min(GS.maxEnergy,GS.energy+10);
+else if(item.name==='2x XP Boost')GS.xpBoostLeft+=5;
+else if(item.name==='Hint Pack x5')GS.hints=(GS.hints||0)+5;
+else if(item.name==='Diamond Shard')GS.diamonds+=5;
+else{GS.skinsOwned=GS.skinsOwned||[];GS.skinsOwned.push(item.name)}
+showToast('✅ '+item.name+' diperoleh!','success');updateUI();renderShop();
+}
+
+// === UI UPDATE ===
+function updateUI(){
+const heroKey=heroes[GS.activeHero]?.name==='Harapan Gemilang'?'hero-harapan-jitu':'hero-'+heroes[GS.activeHero].name.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+const homeHero=document.getElementById('home-hero-avatar');if(homeHero){homeHero.innerHTML='';const heroSource=document.querySelector('[data-template-id="'+heroKey+'"]');const heroImg=document.createElement('img');heroImg.className='w-full h-full object-contain';if(heroSource?.src)heroImg.src=heroSource.src;homeHero.appendChild(heroImg)}
+const homePet=document.getElementById('home-pet-avatar');if(homePet){homePet.innerHTML='';const selectedPet=pets[GS.activePet]||pets[0];const petSource=document.querySelector('[data-template-id="'+selectedPet.imageId+'"]');if(petSource?.src){const petImg=document.createElement('img');petImg.src=petSource.src;petImg.alt=petSource.alt||selectedPet.name;petImg.className='w-full h-full object-contain';homePet.appendChild(petImg)}}
+document.getElementById('coin-display').textContent=GS.coins.toLocaleString();
+document.getElementById('diamond-display').textContent=GS.diamonds;
+document.getElementById('energy-display').textContent=GS.energy+'/'+GS.maxEnergy;
+document.getElementById('xp-display').textContent='Lv.'+GS.level;
+document.getElementById('home-hero-name').textContent=heroes[GS.activeHero]?.name||'Cahaya Murni';
+document.getElementById('home-hero-lv').textContent=GS.heroLevels?.[GS.activeHero]||1;
+document.getElementById('home-pet-lv').textContent=GS.petLevels?.[GS.activePet]||1;
+document.getElementById('home-pet-avatar').textContent=pets[GS.activePet].emoji;
+const petNameEl=document.getElementById('home-pet-name');if(petNameEl)petNameEl.textContent=pets[GS.activePet]?.name||'Blaze Jr.';
+const pct=Math.min(100,Math.round(GS.xp/GS.xpToNext*100));
+document.getElementById('xp-bar').style.width=pct+'%';
+document.getElementById('xp-progress-text').textContent=GS.xp+'/'+GS.xpToNext+' XP untuk Level '+(GS.level+1);
+document.getElementById('rank-display').textContent=getRankName();
+const phl=document.getElementById('profile-hub-level');if(phl)phl.textContent=GS.level;
+const phr=document.getElementById('profile-hub-rank');if(phr)phr.textContent=getRankName();
+const phx=document.getElementById('profile-hub-xp');if(phx)phx.style.width=pct+'%';
+const pht=document.getElementById('profile-hub-xp-text');if(pht)pht.textContent=GS.xp+'/'+GS.xpToNext+' XP';
+document.getElementById('profile-player-name').textContent=GS.playerName||'Express Ranger';
+renderDailyMissions();saveState();
+}
+
+// === DAILY STREAK ===
+function renderStreak(){const c=document.getElementById('streak-container');c.innerHTML='';const days=[1,3,5,7,14,30];const rewards=['🪙100','🪙200','💎5','💎10','⭐500','👑'];days.forEach((d,i)=>{const done=GS.streakDay>=d;const div=document.createElement('div');div.className='flex-shrink-0 w-16 p-2 rounded-lg '+(done?'bg-green-900/50 border border-green-500/50':'bg-white/5 border border-white/10');div.innerHTML=`<div class="text-sm text-slate-200">Hari ${d}</div><div class="text-sm ${done?'text-green-300':'text-slate-300'}">${done?'✅':rewards[i]}</div>`;c.appendChild(div)});document.getElementById('streak-day').textContent=GS.streakDay;const btn=document.getElementById('claim-streak-btn');const today=new Date().toDateString();if(GS.lastStreakDate===today){btn.textContent='✅ Dituntut';btn.disabled=true;btn.classList.add('opacity-50')}else{btn.textContent='🎁 Tuntut Hari Ini';btn.disabled=false;btn.classList.remove('opacity-50')}}
+function claimDailyStreak(){const today=new Date().toDateString();if(GS.lastStreakDate===today)return;GS.streakDay++;GS.lastStreakDate=today;GS.coins+=100;showToast('🔥 Streak Hari '+GS.streakDay+'! +100🪙','success');renderStreak();updateUI()}
+
+// === DAILY MISSIONS ===
+function renderDailyMissions(){const c=document.getElementById('daily-missions');c.innerHTML='';const missions=[{text:'Jawab 20 soalan betul',current:GS.dailyCorrect,target:20,reward:'🪙 100'},{text:'Menang 3 misi',current:GS.dailyStagesWon,target:3,reward:'💎 3'},{text:'Menang 1 battle',current:GS.dailyBattlesWon,target:1,reward:'💎 2'}];missions.forEach(m=>{const done=m.current>=m.target;const d=document.createElement('div');d.className='flex items-center gap-2 text-base';d.innerHTML=`<span class="${done?'text-green-300':'text-slate-200'} flex-1">${done?'✅':'🎯'} ${m.text}</span><span class="text-sm text-cyan-200">${Math.min(m.current,m.target)}/${m.target}</span><span class="text-sm text-yellow-300">${m.reward}</span>`;c.appendChild(d)})}
+
+// === SUBJECTS ===
+const subjects=[{name:'📚 Bahasa Melayu',key:'bm'},{name:'🔤 English',key:'eng'},{name:'🧮 Matematik',key:'math'},{name:'🔬 Sains',key:'sci'}];
+function renderSubjects(){const c=document.getElementById('subject-list');c.innerHTML='';subjects.forEach(s=>{const d=document.createElement('div');d.className='section-card cursor-pointer tactile-btn';d.onclick=()=>{if(s.key==='math')showScreen('math-grade');else if(s.key==='bm')showScreen('bm-grade');else showToast('🚧 Akan datang!','info')};d.innerHTML=`<div class="flex justify-between items-center"><span class="text-xl font-bold text-slate-100">${s.name}</span><span class="text-base text-cyan-300">→</span></div>`;c.appendChild(d)})}
+
+// === BM GRADE & MISSION ===
+let selectedBMGrade=1;
+function selectBMGrade(g){selectedBMGrade=g;document.getElementById('bm-galaxy-grade-label').textContent='🌟 '+BM_GRADES[g].name+' — Pilih Misi';renderBMMissionGrid(g);showScreen('bm-galaxy')}
+function renderBMMissionGrid(g){const grid=document.getElementById('bm-mission-grid');grid.innerHTML='';BM_GRADES[g].missions.forEach((m,i)=>{const card=document.createElement('div');card.className='mission-card';card.innerHTML=`<div class="flex items-center gap-3 mb-2"><span class="text-3xl">${m.icon}</span><div><h3 class="font-bold text-base text-cyan-100">${m.name}</h3><p class="text-sm text-slate-300 mt-0.5">${m.desc}</p></div></div><button class="neon-btn tactile-btn w-full py-3 rounded-full text-base font-bold text-cyan-200" onclick="startBMMission(${i})">🚀 Mula Misi</button>`;grid.appendChild(card)})}
+
+// === MATH GRADE & MISSION ===
+let selectedMathGrade=1;
+function selectMathGrade(g){selectedMathGrade=g;document.getElementById('math-galaxy-grade-label').textContent='🌟 '+MATH_GRADES[g].name+' — Pilih Misi';renderMathMissionGrid(g);showScreen('math-galaxy')}
+function renderMathMissionGrid(g){const grid=document.getElementById('mission-grid');grid.innerHTML='';MATH_GRADES[g].missions.forEach((m,i)=>{const card=document.createElement('div');card.className='mission-card';card.innerHTML=`<div class="flex items-center gap-3 mb-2"><span class="text-3xl">${m.icon}</span><div><h3 class="font-bold text-base text-cyan-100">${m.name}</h3><p class="text-sm text-slate-300 mt-0.5">${m.desc}</p></div></div><button class="neon-btn tactile-btn w-full py-3 rounded-full text-base font-bold text-cyan-200" onclick="startMathMission(${i})">🚀 Mula Misi</button>`;grid.appendChild(card)})}
+
+// === MISSION QUIZ ===
+let mqQuestions=[],mqIdx=0,mqTimer=null,mqTimeLeft=0,mqRunning=false,mqCoins=0,mqXP=0,mqCorrect=0,mqMissionIdx=0,mqSubject='math',mqReturnScreen='math-galaxy';
+
+function startMathMission(idx){mqMissionIdx=idx;mqSubject='math';mqReturnScreen='math-galaxy';mqQuestions=genMathMission(selectedMathGrade,idx);shuffleArray(mqQuestions);mqIdx=0;mqCoins=0;mqXP=0;mqCorrect=0;mqRunning=true;document.getElementById('mq-title').textContent='🪐 '+MATH_GRADES[selectedMathGrade].missions[idx].name;showScreen('mission-quiz');showMQQuestion()}
+function startBMMission(idx){mqMissionIdx=idx;mqSubject='bm';mqReturnScreen='bm-galaxy';mqQuestions=genBMMission(selectedBMGrade,idx);shuffleArray(mqQuestions);mqIdx=0;mqCoins=0;mqXP=0;mqCorrect=0;mqRunning=true;document.getElementById('mq-title').textContent='📚 '+BM_GRADES[selectedBMGrade].missions[idx].name;showScreen('mission-quiz');showMQQuestion()}
+
+function showMQQuestion(){
+if(mqIdx>=mqQuestions.length){endMission();return}
+const q=mqQuestions[mqIdx];
+document.getElementById('mq-question').textContent=q.q;
+document.getElementById('mq-num').textContent='Q '+(mqIdx+1)+'/'+mqQuestions.length;
+document.getElementById('mq-coins').textContent='🪙 '+mqCoins;
+document.getElementById('mq-xp-earned').textContent='⭐ '+mqXP;
+document.getElementById('mq-correct-count').textContent='✅ '+mqCorrect;
+const ans=document.getElementById('mq-answers');ans.innerHTML='';
+const shuffled=q.a.map((a,i)=>({text:a,idx:i}));shuffleArray(shuffled);
+shuffled.forEach(item=>{const btn=document.createElement('button');btn.className='answer-btn rounded-xl p-4 text-base font-bold tactile-btn';btn.textContent=item.text;btn.onclick=()=>answerMQ(item.idx,q.c,btn);ans.appendChild(btn)});
+mqTimeLeft=150;clearInterval(mqTimer);
+document.getElementById('mq-timer').style.width='100%';
+mqTimer=setInterval(()=>{mqTimeLeft--;document.getElementById('mq-timer').style.width=Math.max(0,mqTimeLeft/150*100)+'%';document.getElementById('mq-time-label').textContent=Math.ceil(mqTimeLeft/10);if(mqTimeLeft<=0){clearInterval(mqTimer);answerMQ(-1,mqQuestions[mqIdx].c,null)}},100);
+}
+function useHint(){if(!mqRunning)return;if(GS.diamonds<20){showToast('Diamond tidak cukup!','error');return}const q=mqQuestions[mqIdx];const buttons=[...document.getElementById('mq-answers').querySelectorAll('button')];const wrong=buttons.find(b=>b.textContent!==q.a[q.c]&&!b.disabled);if(!wrong)return;GS.diamonds-=20;wrong.disabled=true;wrong.classList.add('opacity-40');showToast('💡 Hint digunakan!','success');updateUI()}
+function skipQuestion(){if(!mqRunning)return;if(GS.coins<30){showToast('Coin tidak cukup!','error');return}GS.coins-=30;clearInterval(mqTimer);showToast('⏩ Dilangkau!','info');updateUI();setTimeout(()=>{mqIdx++;showMQQuestion()},350)}
+function useFiftyFifty(){if(!mqRunning)return;if(GS.diamonds<50){showToast('Diamond tidak cukup!','error');return}const q=mqQuestions[mqIdx];const buttons=[...document.getElementById('mq-answers').querySelectorAll('button')];const wrong=buttons.filter(b=>b.textContent!==q.a[q.c]&&!b.disabled).slice(0,2);if(wrong.length<2)return;GS.diamonds-=50;wrong.forEach(b=>{b.disabled=true;b.classList.add('opacity-40')});showToast('🎯 50:50!','success');updateUI()}
+
+function answerMQ(chosen,correct,btn){
+clearInterval(mqTimer);const btns=document.getElementById('mq-answers').querySelectorAll('button');btns.forEach(b=>b.disabled=true);
+if(chosen===correct){if(btn)btn.classList.add('correct');mqCorrect++;GS.totalCorrect++;GS.dailyCorrect++;mqCoins+=10;GS.coins+=10;const xpG=GS.xpBoostLeft>0?20:10;mqXP+=xpG;addXP(xpG);if(GS.xpBoostLeft>0)GS.xpBoostLeft--;showToast('✅ Pandai! +10🪙','success')}
+else{if(btn)btn.classList.add('wrong');btns.forEach(b=>{if(b.textContent===mqQuestions[mqIdx].a[correct])b.classList.add('correct')});GS.coins=Math.max(0,GS.coins-5);mqCoins-=5;showToast('❌ Cuba Lagi!','error')}
+updateUI();setTimeout(()=>{mqIdx++;showMQQuestion()},1000);
+}
+function endMission(){mqRunning=false;clearInterval(mqTimer);GS.stagesCompleted++;GS.dailyStagesWon++;GS.gameHistory=GS.gameHistory||[];GS.gameHistory.unshift({date:new Date().toISOString(),subject:mqSubject,correct:mqCorrect,total:mqQuestions.length});if(GS.gameHistory.length>50)GS.gameHistory.length=50;
+document.getElementById('mc-score').textContent=mqCorrect;document.getElementById('mc-total').textContent=mqQuestions.length;document.getElementById('mc-correct').textContent=mqCorrect;document.getElementById('mc-wrong').textContent=(mqQuestions.length-mqCorrect);document.getElementById('mc-coins').textContent=mqCoins;document.getElementById('mc-xp').textContent=mqXP;document.getElementById('mc-badge').textContent='✅';document.getElementById('mission-complete-overlay').classList.remove('hidden');updateUI()}
+function replayMission(){document.getElementById('mission-complete-overlay').classList.add('hidden');if(mqSubject==='math')startMathMission(mqMissionIdx);else startBMMission(mqMissionIdx)}
+function closeMissionComplete(){document.getElementById('mission-complete-overlay').classList.add('hidden');showScreen(mqReturnScreen)}
+function exitMission(){mqRunning=false;clearInterval(mqTimer);showScreen(mqReturnScreen)}
+
+// === XP & LEVEL ===
+function addXP(amount){GS.xp+=amount;while(GS.xp>=GS.xpToNext){GS.xp-=GS.xpToNext;GS.level++;GS.xpToNext=Math.round(GS.xpToNext*1.3);showLevelUp('Level '+GS.level+'!');GS.diamonds+=5;GS.energy=GS.maxEnergy}updateUI()}
+function showLevelUp(detail){document.getElementById('levelup-detail').textContent=detail;document.getElementById('levelup-overlay').classList.remove('hidden');const cc=document.getElementById('confetti-container');cc.innerHTML='';const colors=['#7c3aed','#06b6d4','#fbbf24','#f472b6','#10b981'];for(let i=0;i<30;i++){const c=document.createElement('div');c.className='confetti';c.style.left=Math.random()*100+'%';c.style.top='-10px';c.style.background=colors[Math.floor(Math.random()*colors.length)];c.style.animationDelay=(Math.random()*.5)+'s';cc.appendChild(c)}}
+function closeLevelUp(){document.getElementById('levelup-overlay').classList.add('hidden')}
+
+// === DUEL (Full Setup) ===
+let duelState={p1Hero:0,p2Hero:0};
+
+function renderDuelHeroPickers(){
+const h1=document.getElementById('duel-p1-heroes');
+const h2=document.getElementById('duel-p2-heroes');
+h1.innerHTML='';h2.innerHTML='';
+heroes.slice(0,12).forEach((h,i)=>{
+h1.innerHTML+=`<div class="hero-pick ${duelState.p1Hero===i?'selected':''}" onclick="duelState.p1Hero=${i};renderDuelHeroPickers()">${h.emoji}</div>`;
+h2.innerHTML+=`<div class="hero-pick ${duelState.p2Hero===i?'selected':''}" onclick="duelState.p2Hero=${i};renderDuelHeroPickers()">${h.emoji}</div>`;
+});
+}
+
+let duelGame={running:false,p1Score:0,p2Score:0,round:0,questions:[],answered:false};
+
+function startDuelGame(){
+const p1Name=document.getElementById('duel-p1-name').value.trim()||'Player 1';
+const p2Name=document.getElementById('duel-p2-name').value.trim()||'Player 2';
+if(!p1Name||!p2Name){showToast('Masukkan nama kedua pemain!','error');return}
+const p1Grade=parseInt(document.getElementById('duel-p1-grade').value);
+const p1Subject=document.getElementById('duel-p1-subject').value;
+duelGame.p1Name=p1Name;duelGame.p2Name=p2Name;
+duelGame.p1Score=0;duelGame.p2Score=0;duelGame.round=0;duelGame.answered=false;duelGame.running=true;
+duelGame.questions=(p1Subject==='math'?genMathMission(p1Grade,0):genBMMission(p1Grade,0)).slice(0,10);
+shuffleArray(duelGame.questions);
+document.getElementById('duel-setup').classList.add('hidden');
+document.getElementById('duel-game-area').classList.remove('hidden');
+document.getElementById('duel-g-p1-name').textContent=p1Name;
+document.getElementById('duel-g-p2-name').textContent=p2Name;
+document.getElementById('duel-g-p1-hero').textContent=heroes[duelState.p1Hero].emoji;
+document.getElementById('duel-g-p2-hero').textContent=heroes[duelState.p2Hero].emoji;
+document.getElementById('duel-g-p1-score').textContent='0';
+document.getElementById('duel-g-p2-score').textContent='0';
+document.getElementById('duel-g-result').classList.add('hidden');
+document.getElementById('duel-g-back').classList.add('hidden');
+nextDuelGameRound();
+}
+function nextDuelGameRound(){
+if(duelGame.round>=duelGame.questions.length){endDuelGame();return}
+duelGame.answered=false;
+const q=duelGame.questions[duelGame.round];
+document.getElementById('duel-g-question-p1').textContent=q.q;
+document.getElementById('duel-g-question-p2').textContent=q.q;
+const ans1=document.getElementById('duel-g-answers-p1');const ans2=document.getElementById('duel-g-answers-p2');ans1.innerHTML='';ans2.innerHTML='';
+const labels=['A','B','C','D'];
+q.a.forEach((a,i)=>{const makeButton=(label,player)=>{const btn=document.createElement('button');btn.className='answer-btn rounded-xl p-3 text-base font-bold tactile-btn';btn.textContent=label+'. '+a;btn.onclick=()=>duelGameAnswer(player,i,btn);return btn};ans1.appendChild(makeButton(labels[i],1));ans2.appendChild(makeButton(String(i+1),2))});
+document.getElementById('duel-p1-timer-fill').style.width='100%';document.getElementById('duel-p2-timer-fill').style.width='100%';
+}
+function duelGameAnswer(player,idx,btn){
+if(duelGame.answered)return;duelGame.answered=true;
+const q=duelGame.questions[duelGame.round];
+const btns=document.querySelectorAll('#duel-g-answers-p1 button,#duel-g-answers-p2 button');btns.forEach(b=>b.disabled=true);
+if(idx===q.c){btn.classList.add('correct');if(player===1)duelGame.p1Score++;else duelGame.p2Score++;document.getElementById('duel-arena-'+(player===1?'p1':'p2')).classList.add('duel-hit-forward')}else{btn.classList.add('wrong');document.getElementById('duel-arena-'+(player===1?'p1':'p2')).classList.add('duel-hit-back')}
+document.getElementById('duel-g-p1-score').textContent=duelGame.p1Score;
+document.getElementById('duel-g-p2-score').textContent=duelGame.p2Score;
+setTimeout(()=>document.querySelectorAll('.duel-arena-fighters span').forEach(el=>el.classList.remove('duel-hit-forward','duel-hit-back')),450);
+duelGame.round++;setTimeout(nextDuelGameRound,1200);
+}
+document.addEventListener('keydown',e=>{if(!duelGame.running||duelGame.answered)return;const k=e.key.toLowerCase();const p1Map={a:0,b:1,c:2,d:3};const p2Map={'1':0,'2':1,'3':2,'4':3};const p1Btns=document.getElementById('duel-g-answers-p1').querySelectorAll('button');const p2Btns=document.getElementById('duel-g-answers-p2').querySelectorAll('button');if(k in p1Map&&p1Btns[p1Map[k]])duelGameAnswer(1,p1Map[k],p1Btns[p1Map[k]]);else if(k in p2Map&&p2Btns[p2Map[k]])duelGameAnswer(2,p2Map[k],p2Btns[p2Map[k]])});
+function endDuelGame(){
+duelGame.running=false;
+const res=document.getElementById('duel-g-result');res.classList.remove('hidden');
+document.getElementById('duel-g-back').classList.remove('hidden');
+if(duelGame.p1Score>duelGame.p2Score){res.textContent='🏆 '+duelGame.p1Name+' Menang!';res.className='text-lg font-bold mt-3 text-center text-cyan-300'}
+else if(duelGame.p2Score>duelGame.p1Score){res.textContent='🏆 '+duelGame.p2Name+' Menang!';res.className='text-lg font-bold mt-3 text-center text-pink-300'}
+else{res.textContent='🤝 Seri!';res.className='text-lg font-bold mt-3 text-center text-yellow-300'}
+}
+function duelBackToSetup(){document.getElementById('duel-setup').classList.remove('hidden');document.getElementById('duel-game-area').classList.add('hidden')}
+
+// === SQUAD MODE ===
+let squadState={players:[{name:'',hero:0},{name:'',hero:1},{name:'',hero:2},{name:'',hero:3}]};
+let squadGame={running:false,scores:[0,0,0,0],turn:0,round:0,questions:[],answered:false};
+
+function renderSquadSetup(){
+const container=document.getElementById('squad-players-setup');container.innerHTML='';
+const colors=['text-cyan-200','text-pink-200','text-green-200','text-yellow-200'];
+const labels=['🦸 Pemain 1','🧙 Pemain 2','🥷 Pemain 3','👨‍🚀 Pemain 4'];
+for(let p=0;p<4;p++){
+const div=document.createElement('div');div.className='section-card';
+div.innerHTML=`<h3 class="text-base font-bold ${colors[p]} mb-2">${labels[p]}</h3><input id="squad-p${p}-name" type="text" class="setup-input mb-2" placeholder="Nama Pemain ${p+1}" maxlength="15"><p class="text-sm text-slate-300 mb-1">Pilih Hero:</p><div class="flex flex-wrap gap-1" id="squad-p${p}-heroes"></div>`;
+container.appendChild(div);
+}
+renderSquadHeroes();
+}
+function renderSquadHeroes(){
+for(let p=0;p<4;p++){
+const el=document.getElementById('squad-p'+p+'-heroes');if(!el)continue;el.innerHTML='';
+heroes.slice(0,12).forEach((h,i)=>{
+el.innerHTML+=`<div class="hero-pick ${squadState.players[p].hero===i?'selected':''}" style="width:40px;height:40px;font-size:1rem" onclick="squadState.players[${p}].hero=${i};renderSquadHeroes()">${h.emoji}</div>`;
+});
+}
+}
+function startSquadGame(){
+for(let p=0;p<4;p++){
+const name=document.getElementById('squad-p'+p+'-name').value.trim();
+if(!name){showToast('Semua 4 pemain perlu nama!','error');return}
+squadState.players[p].name=name;
+}
+const grade=parseInt(document.getElementById('squad-grade').value);
+const subject=document.getElementById('squad-subject').value;
+squadGame.questions=(subject==='math'?genMathMission(grade,0):genBMMission(grade,0)).slice(0,20);
+shuffleArray(squadGame.questions);
+squadGame.scores=[0,0,0,0];squadGame.turn=0;squadGame.round=0;squadGame.running=true;squadGame.answered=false;
+document.getElementById('squad-setup').classList.add('hidden');
+document.getElementById('squad-game-area').classList.remove('hidden');
+document.getElementById('squad-result').classList.add('hidden');
+document.getElementById('squad-back').classList.add('hidden');
+renderSquadScoreboard();nextSquadRound();
+}
+function renderSquadScoreboard(){
+const sb=document.getElementById('squad-scoreboard');sb.innerHTML='';
+const colors=['bg-cyan-900/50 border-cyan-500/50','bg-pink-900/50 border-pink-500/50','bg-green-900/50 border-green-500/50','bg-yellow-900/50 border-yellow-500/50'];
+squadState.players.forEach((p,i)=>{sb.innerHTML+=`<div class="px-3 py-2 rounded-lg border text-sm ${colors[i]} ${squadGame.turn===i?'ring-2 ring-white':''}"><span class="font-bold text-slate-100">${p.name}</span> <span class="text-yellow-300">${squadGame.scores[i]}</span></div>`});
+}
+function nextSquadRound(){
+if(squadGame.round>=squadGame.questions.length){endSquadGame();return}
+squadGame.answered=false;
+const q=squadGame.questions[squadGame.round];
+document.getElementById('squad-turn-name').textContent=squadState.players[squadGame.turn].name;
+document.getElementById('squad-question').textContent=q.q;
+const ans=document.getElementById('squad-answers');ans.innerHTML='';
+const shuffled=q.a.map((a,i)=>({text:a,idx:i}));shuffleArray(shuffled);
+shuffled.forEach(item=>{const btn=document.createElement('button');btn.className='answer-btn rounded-xl p-3 text-base font-bold tactile-btn';btn.textContent=item.text;btn.onclick=()=>squadAnswer(item.idx,q.c,btn);ans.appendChild(btn)});
+renderSquadScoreboard();
+}
+function squadAnswer(chosen,correct,btn){
+if(squadGame.answered)return;squadGame.answered=true;
+const btns=document.getElementById('squad-answers').querySelectorAll('button');btns.forEach(b=>b.disabled=true);
+if(chosen===correct){btn.classList.add('correct');squadGame.scores[squadGame.turn]++;showToast('✅ '+squadState.players[squadGame.turn].name+' betul!','success')}
+else{btn.classList.add('wrong');showToast('❌ Salah!','error')}
+squadGame.turn=(squadGame.turn+1)%4;squadGame.round++;
+renderSquadScoreboard();setTimeout(nextSquadRound,1200);
+}
+function endSquadGame(){
+squadGame.running=false;
+const maxScore=Math.max(...squadGame.scores);
+const winners=squadState.players.filter((_,i)=>squadGame.scores[i]===maxScore).map(p=>p.name);
+const res=document.getElementById('squad-result');res.classList.remove('hidden');
+document.getElementById('squad-back').classList.remove('hidden');
+res.textContent='🏆 Pemenang: '+winners.join(' & ')+' ('+maxScore+' pts)';
+res.className='text-lg font-bold mt-3 text-center text-yellow-300';
+}
+function squadBackToSetup(){document.getElementById('squad-setup').classList.remove('hidden');document.getElementById('squad-game-area').classList.add('hidden')}
+
+// === HEROES & PETS RENDER ===
+function renderHeroes(){const g=document.getElementById('hero-grid');g.innerHTML='';heroes.forEach((h,i)=>{const unlocked=i===0||(GS.unlockedHeroes||[]).includes(i);const active=unlocked&&GS.activeHero===i;const d=document.createElement('div');d.className='section-card text-center tactile-btn cursor-pointer'+(active?' border-cyan-400 border-2':'');const artworkId=h.name==='Harapan Gemilang'?'hero-harapan-jitu':'hero-'+h.name.toLowerCase().replace(/[^a-z0-9]+/g,'-');d.innerHTML=`<div class="w-full aspect-square max-w-[150px] mx-auto rounded-xl overflow-hidden bg-white/10 border border-white/10"><img data-template-id="${artworkId}" class="canva-image w-full h-full object-cover" loading="lazy"></div><p class="text-sm font-bold mt-1 text-slate-100">${h.name}</p><p class="text-xs ${active?'text-cyan-300':unlocked?'text-green-300':'text-yellow-300'}">${active?'✅ Aktif':unlocked?h.bonus:'🪙 '+h.cost}</p>`;d.onclick=()=>{if(!unlocked){if(GS.coins<h.cost){showToast('Coin tidak cukup!','error');return}GS.coins-=h.cost;GS.unlockedHeroes=GS.unlockedHeroes||[0];GS.unlockedHeroes.push(i);showToast('🎉 '+h.name+' dibuka!','success')}else GS.selectedHero=i;renderHeroes();updateHeroPowerBox()};g.appendChild(d)})}
+function confirmHeroSelection(){openGenericModal(`<h2 class="text-xl font-bold text-cyan-200 mb-3">🦸 Sahkan Hero</h2><p class="text-base text-slate-200 mb-4">Hero dipilih. Tekan Confirm Hero untuk mengaktifkan pilihan ini.</p><button class="neon-btn tactile-btn w-full py-3 rounded-xl bg-black border-2 border-cyan-200 text-white font-bold" onclick="GS.activeHero=GS.selectedHero;GS.quizHeroSelected=true;saveState();updateUI();renderHeroes();updateHeroPowerBox();closeGenericModal();showToast('✅ Hero disahkan!','success')">✅ Confirm Hero</button>`)}
+function updateHeroPowerBox(){const box=document.getElementById('hero-power-box');if(!box)return;if(!GS.quizHeroSelected){box.classList.add('hidden');return}box.classList.remove('hidden');document.getElementById('power-hero-name').textContent=heroes[GS.activeHero].name;document.getElementById('power-hero-power').textContent=heroes[GS.activeHero].bonus;document.getElementById('power-hero-bonus').textContent=heroes[GS.activeHero].bonus}
+function renderPets(){const g=document.getElementById('pet-grid');g.innerHTML='';pets.forEach((p,i)=>{const active=GS.activePet===i;const selected=GS.selectedPet===i;const d=document.createElement('div');d.className='section-card text-center tactile-btn cursor-pointer'+(active?' border-orange-400 border-2':'')+(selected?' ring-2 ring-cyan-300':'');d.innerHTML=`<div class="w-full aspect-square max-w-[120px] mx-auto rounded-xl overflow-hidden bg-white/10"><img data-template-id="${p.imageId}" class="canva-image w-full h-full object-cover" loading="lazy"></div><p class="text-sm font-bold mt-1 text-slate-100">${p.name}</p><p class="text-xs ${active?'text-orange-300':'text-slate-300'}">${active?'✅ Aktif':p.bonus}</p>`;d.onclick=()=>{GS.selectedPet=i;renderPets();showToast('🐾 '+p.name+' dipilih. Tekan Confirm Pet.','info')};g.appendChild(d)})}
+function confirmPetSelection(){openGenericModal(`<h2 class="text-xl font-bold text-orange-200 mb-3">🐾 Sahkan Pet</h2><p class="text-base text-slate-200 mb-4">Pet dipilih. Tekan Confirm Pet untuk mengaktifkan pilihan ini.</p><button class="neon-btn tactile-btn w-full py-3 rounded-xl bg-black border-2 border-orange-200 text-white font-bold" onclick="GS.activePet=GS.selectedPet;saveState();updateUI();renderPets();closeGenericModal();showToast('✅ Pet disahkan!','success')">✅ Confirm Pet</button>`)}
+
+// === PROFILE ACTIONS ===
+function openGenericModal(html){document.getElementById('generic-modal-content').innerHTML=html;document.getElementById('generic-modal').classList.add('show')}
+function closeGenericModal(){document.getElementById('generic-modal').classList.remove('show')}
+
+function profileAction(action){
+switch(action){
+case 'avatar':openGenericModal(`<h2 class="text-xl font-bold text-cyan-200 mb-4">🖼️ Avatar</h2><div class="grid grid-cols-4 gap-3">${['🌟','🦸','🧙','🥷','👨‍🚀','👩‍🚀','🤖','🎭'].map((e,i)=>`<button class="text-3xl p-3 rounded-xl bg-white/10 tactile-btn border ${GS.activeFrame===i?'border-cyan-400':'border-transparent'}" onclick="GS.activeFrame=${i};document.getElementById('profile-avatar-display').textContent='${e}';saveState();closeGenericModal();showToast('Avatar dikemas kini!','success')">${e}</button>`).join('')}</div>`);break;
+case 'rename':openGenericModal(`<h2 class="text-xl font-bold text-cyan-200 mb-4">✏️ Tukar Nama</h2><input id="rename-input" type="text" class="w-full p-3 rounded-xl bg-white/10 border border-purple-400/50 text-white text-lg mb-4" placeholder="${GS.playerName}" maxlength="20"><button class="neon-btn tactile-btn w-full py-3 rounded-xl text-cyan-200 font-bold" onclick="doRename()">✅ Simpan</button>`);break;
+case 'stats':openGenericModal(`<h2 class="text-xl font-bold text-cyan-200 mb-4">📊 Statistik</h2><div class="space-y-2 text-base text-slate-200"><p>🎯 Total Betul: <span class="text-green-300 font-bold">${GS.totalCorrect}</span></p><p>🏆 Misi: <span class="text-yellow-300 font-bold">${GS.stagesCompleted}</span></p><p>🔥 Streak: <span class="text-orange-300 font-bold">${GS.streakDay} hari</span></p><p>🪙 Coin: <span class="text-yellow-300 font-bold">${GS.coins.toLocaleString()}</span></p><p>💎 Diamond: <span class="text-cyan-300 font-bold">${GS.diamonds}</span></p><p>🦸 Hero: <span class="text-purple-300 font-bold">${(GS.unlockedHeroes||[]).length}/${heroes.length}</span></p></div>`);break;
+case 'achievements':openGenericModal(`<h2 class="text-xl font-bold text-yellow-300 mb-4">🏆 Achievement</h2><div class="space-y-2 text-base text-slate-200">${['🥇 Jawab 1 soalan','🎯 10 betul berturut','🔥 Streak 7 hari','💰 5000 coin','🦸 10 hero','🏆 Level 10'].map(a=>`<div class="p-3 rounded-xl bg-white/5 border border-white/10">${a}</div>`).join('')}</div>`);break;
+case 'skins':openGenericModal(`<h2 class="text-xl font-bold text-pink-300 mb-4">✨ Skin</h2>${(GS.skinsOwned||[]).length?`<div class="space-y-2">${GS.skinsOwned.map(s=>`<div class="p-3 rounded-xl bg-white/5 border border-pink-400/30 text-base text-slate-200">✨ ${s}</div>`).join('')}</div>`:'<p class="text-base text-slate-300">Tiada skin. Beli di Shop!</p>'}`);break;
+case 'history':const hist=(GS.gameHistory||[]).slice(0,10);openGenericModal(`<h2 class="text-xl font-bold text-cyan-200 mb-4">🕘 Sejarah</h2>${hist.length?`<div class="space-y-2">${hist.map(h=>`<div class="p-3 rounded-xl bg-white/5 border border-purple-400/30 text-sm text-slate-200">${new Date(h.date).toLocaleDateString()} — ${h.subject.toUpperCase()} — ${h.correct}/${h.total}</div>`).join('')}</div>`:'<p class="text-base text-slate-300">Tiada sejarah.</p>'}`);break;
+case 'saveload':openGenericModal(`<h2 class="text-xl font-bold text-cyan-200 mb-4">💾 Simpan</h2><button class="w-full neon-btn tactile-btn py-3 rounded-xl text-green-200 text-base font-bold mb-3" onclick="saveState();showToast('💾 Disimpan!','success');closeGenericModal()">💾 Simpan Sekarang</button><p class="text-sm text-slate-300">Data disimpan automatik.</p>`);break;
+}
+}
+function doRename(){const input=document.getElementById('rename-input');const name=input.value.trim();if(!name||name.length<2){showToast('Nama terlalu pendek!','error');return}GS.playerName=name;saveState();updateUI();closeGenericModal();showToast('✅ Nama: '+name,'success')}
+
+// === NAV ===
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));const el=document.getElementById('screen-'+id);if(el)el.classList.add('active');const navMap={home:0,galaxy:1,subject:2,shop:3,profile:4};document.querySelectorAll('.nav-item').forEach((n,i)=>n.classList.toggle('active',i===(navMap[id]??-1)));window.scrollTo(0,0);if(id==='hero-system')renderHeroes();if(id==='pet-system')renderPets();if(id==='subject')renderSubjects();if(id==='galaxy')renderGalaxyPlanets();if(id==='shop')renderShop();if(id==='duel')renderDuelHeroPickers();if(id==='squad'){renderSquadSetup()}}
+function navTo(id){showScreen(id)}
+function closeModal(){document.getElementById('welcome-modal').classList.add('hidden')}
+function shuffleArray(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
+
+// === INIT ===
+GS.activeHero=Number.isInteger(GS.activeHero)&&GS.activeHero>=0&&GS.activeHero<heroes.length?GS.activeHero:0;
+GS.selectedHero=Number.isInteger(GS.selectedHero)&&GS.selectedHero>=0&&GS.selectedHero<heroes.length?GS.selectedHero:GS.activeHero;
+GS.selectedPet=Number.isInteger(GS.selectedPet)&&GS.selectedPet>=0&&GS.selectedPet<pets.length?GS.selectedPet:GS.activePet;
+if(!Array.isArray(GS.unlockedHeroes)||!GS.unlockedHeroes.includes(GS.activeHero)){GS.activeHero=0}
+GS.quizHeroSelected=GS.quizHeroSelected===true;
+window.addEventListener('load',updateUI);
+GS.playerName=GS.playerName||'Express Ranger';
+GS.skinsOwned=GS.skinsOwned||[];
+GS.gameHistory=GS.gameHistory||[];
+saveState();renderStreak();updateUI();updateHeroPowerBox();
+window.addEventListener('beforeunload',saveState);
+window.addEventListener('pagehide',saveState);
+window.addEventListener('unload',saveState);
+window.addEventListener('beforeunload',saveState);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')saveState()});
+document.addEventListener('click',e=>{if(e.target.closest('a,[data-navigation],.nav-item'))saveState()});
+</script>
+ 
+</body></html>
