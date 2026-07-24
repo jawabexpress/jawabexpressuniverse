@@ -1,0 +1,299 @@
+```html
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jawab Express Universe</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body class="text-white relative min-h-screen">
+  
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="fixed inset-0 z-70 flex flex-col items-center justify-center bg-gradient-to-br from-[#0a0a2e] to-[#0d1b2a] transition-opacity duration-500">
+    <div class="text-5xl hero-idle mb-4"></div>
+    <div class="text-xl font-bold text-cyan-200 mb-2">Memuatkan Universe...</div>
+    <p id="loading-tip" class="text-base text-purple-200 max-w-xs text-center px-4"></p>
+  </div>
+  
+  <div class="stars" id="starfield"></div>
+  <div id="toast-container"></div>
+  
+  <!-- Welcome Modal -->
+  <div id="welcome-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+    <div class="relative max-w-lg w-full rounded-2xl p-8 text-center border border-purple-500/50 bg-gradient-to-br from-[#1e0a3c]/95 to-[#0a1432]/95">
+      <div class="text-5xl mb-4 coin-spin">💎</div>
+      <h1 class="text-3xl font-bold mb-2 crystal-glow text-purple-200">💎 JAWAB EXPRESS UNIVERSE</h1>
+      <p class="text-lg mb-6 leading-relaxed text-slate-100">Selamat datang, Express Ranger! Jawab soalan, kumpul coin, naik level, dan jelajah galaksi!</p>
+      <button class="neon-btn tactile-btn px-8 py-3 rounded-full font-bold text-xl text-white bg-gradient-to-br from-purple-600 to-cyan-500" onclick="document.getElementById('welcome-modal').classList.add('hidden')">🚀 Mula Pengembaraan</button>
+    </div>
+  </div>
+
+  <!-- Level Up Overlay -->
+  <div id="levelup-overlay" class="levelup-overlay hidden">
+    <div id="confetti-container" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+    <div class="levelup-text mb-4">⬆️ LEVEL UP!</div>
+    <p id="levelup-detail" class="text-xl text-cyan-200 font-bold mb-4"></p>
+    <button class="neon-btn tactile-btn px-6 py-3 rounded-full text-cyan-200 text-lg border border-cyan-400" onclick="document.getElementById('levelup-overlay').classList.add('hidden')">🎉 Teruskan!</button>
+  </div>
+
+  <!-- Mission Complete Overlay -->
+  <div id="mission-complete-overlay" class="reward-overlay hidden">
+    <div class="text-center max-w-sm mx-auto p-6">
+      <div class="text-5xl mb-3 chest-anim">🏆</div>
+      <h2 class="text-2xl font-black text-yellow-300 mb-2">Misi Selesai!</h2>
+      <div class="section-card text-left space-y-2 mb-4">
+        <p class="text-base text-slate-100">⭐ Skor: <span id="mc-score" class="text-cyan-300 font-bold">0</span> / <span id="mc-total">100</span></p>
+        <p class="text-base text-slate-100">✅ Betul: <span id="mc-correct" class="text-green-300 font-bold">0</span></p>
+        <p class="text-base text-slate-100">❌ Salah: <span id="mc-wrong" class="text-red-300 font-bold">0</span></p>
+        <p class="text-base text-slate-100">💰 Coin: <span id="mc-coins" class="text-yellow-300 font-bold">0</span></p>
+        <p class="text-base text-slate-100">⚡ XP: <span id="mc-xp" class="text-purple-300 font-bold">0</span></p>
+      </div>
+      <div class="flex gap-3 justify-center flex-wrap">
+        <button class="neon-btn tactile-btn px-5 py-3 rounded-full text-cyan-200 font-bold text-base" onclick="replayMission()">🔄 Main Semula</button>
+        <button class="neon-btn tactile-btn px-5 py-3 rounded-full text-yellow-200 font-bold text-base border border-yellow-500" onclick="closeMissionComplete()">🚀 Kembali</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generic Modal -->
+  <div id="generic-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/75 p-4 backdrop-blur-sm" onclick="if(event.target===this)this.classList.remove('show')">
+    <div class="bg-[#0f0823] border border-cyan-500/40 rounded-2xl max-w-md w-full max-h-[85vh] overflow-y-auto p-6 relative">
+      <button class="absolute top-3 right-4 text-2xl text-purple-300" onclick="document.getElementById('generic-modal').classList.remove('show')">×</button>
+      <div id="generic-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Kawasan Paparan Utama (Screens) -->
+  <div class="relative z-10 pb-24">
+    
+    <!-- 1. HOME SCREEN -->
+    <div id="screen-home" class="screen active">
+      <div class="relative overflow-hidden">
+        <header class="text-center pt-6 pb-2 px-4 relative">
+          <h1 class="text-3xl md:text-4xl font-black tracking-wide crystal-glow text-white">JAWAB EXPRESS UNIVERSE</h1>
+          <p class="text-lg mt-1 text-slate-300 font-bold">The Ultimate Learning Adventure</p>
+        </header>
+        <div class="flex justify-center gap-6 py-4 relative">
+          <div class="text-center cursor-pointer tactile-btn" onclick="showScreen('hero-system')">
+            <div class="w-24 h-24 rounded-full bg-gradient-to-br from-purple-600 to-cyan-500 flex items-center justify-center text-5xl border-2 border-purple-400 hero-idle shadow-lg shadow-purple-500/30 overflow-hidden" id="home-hero-avatar"></div>
+            <p class="text-sm mt-2 text-white font-bold"><span id="home-hero-name">Cahaya Murni</span> Lv.<span id="home-hero-lv">1</span></p>
+          </div>
+          <div class="text-center cursor-pointer tactile-btn" onclick="showScreen('pet-system')">
+            <div class="rounded-full bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center text-4xl border-2 border-orange-300 pet-play shadow-lg shadow-orange-500/20 w-[4.5rem] h-[4.5rem]" id="home-pet-avatar">🐉</div>
+            <p class="text-sm mt-2 text-white font-bold"><span id="home-pet-name">Blaze Jr.</span> · Lv.<span id="home-pet-lv">1</span></p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flex flex-wrap justify-center gap-2 px-4 py-3">
+        <div class="stat-pill text-white font-bold">🪙 <span id="coin-display">0</span></div>
+        <div class="stat-pill text-white font-bold">💎 <span id="diamond-display">0</span></div>
+        <div class="stat-pill text-white font-bold">⚡ <span id="energy-display">30/30</span></div>
+        <div class="stat-pill text-white font-bold">⭐ <span id="xp-display">Lv.1</span></div>
+        <div class="stat-pill text-white font-bold">🏅 <span id="rank-display">Bronze I</span></div>
+      </div>
+
+      <div class="max-w-md mx-auto px-4 mb-4">
+        <div class="flex justify-center gap-2">
+          <button class="menu-btn tactile-btn w-28" onclick="showScreen('duel')">
+            <div class="text-2xl">🆚</div><div class="text-sm mt-1">Duel</div>
+          </button>
+          <button class="menu-btn tactile-btn w-28" onclick="showScreen('squad')">
+            <div class="text-2xl">👥</div><div class="text-sm mt-1">Squad</div>
+          </button>
+        </div>
+      </div>
+      
+      <div class="max-w-md mx-auto px-4 mb-4">
+        <div class="section-card">
+          <h3 class="text-base font-bold text-yellow-300 mb-2">🎯 Misi Harian</h3>
+          <div id="daily-missions" class="space-y-2"></div>
+        </div>
+      </div>
+      
+      <div class="max-w-md mx-auto px-4 mb-4">
+        <div class="section-card">
+          <h3 class="text-base font-bold text-purple-200 mb-2">📊 Progres XP</h3>
+          <div class="bg-white/10 rounded-full overflow-hidden mb-1">
+            <div class="progress-bar" id="xp-bar" style="width:0%"></div>
+          </div>
+          <p class="text-sm text-purple-200" id="xp-progress-text">0/100 XP untuk Level 2</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. SUBJECT & GRADE SCREENS -->
+    <div id="screen-subject" class="screen">
+      <div class="p-4 max-w-lg mx-auto">
+        <button onclick="showScreen('home')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+        <h2 class="text-2xl font-bold text-center mb-4 crystal-glow text-white">📚 Pilih Subjek</h2>
+        <div class="space-y-3" id="subject-list"></div>
+      </div>
+    </div>
+
+    <div id="screen-bm-grade" class="screen">
+      <div class="p-4 max-w-lg mx-auto">
+        <button onclick="showScreen('subject')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+        <h2 class="text-2xl font-bold text-center mb-1 crystal-glow text-purple-300">📚 BAHASA MELAYU</h2>
+        <p class="text-base text-center mb-6 text-slate-200">Pilih darjah kamu!</p>
+        <div class="grid grid-cols-3 gap-4" id="bm-grade-buttons"></div>
+      </div>
+    </div>
+
+    <div id="screen-math-grade" class="screen">
+      <div class="p-4 max-w-lg mx-auto">
+        <button onclick="showScreen('subject')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+        <h2 class="text-2xl font-bold text-center mb-1 crystal-glow text-yellow-200">🧮 MATEMATIK</h2>
+        <p class="text-base text-center mb-6 text-slate-200">Pilih darjah kamu!</p>
+        <div class="grid grid-cols-3 gap-4" id="math-grade-buttons"></div>
+      </div>
+    </div>
+
+    <!-- 3. MISSION LISTS -->
+    <div id="screen-bm-galaxy" class="screen">
+      <div class="p-4 max-w-2xl mx-auto">
+        <button onclick="showScreen('bm-grade')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+        <h2 class="text-2xl font-bold text-center mb-1 crystal-glow text-purple-300">📚 MISI BAHASA MELAYU</h2>
+        <p id="bm-galaxy-grade-label" class="text-base text-center text-purple-200 mb-5"></p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="bm-mission-grid"></div>
+      </div>
+    </div>
+
+    <div id="screen-math-galaxy" class="screen">
+      <div class="p-4 max-w-2xl mx-auto">
+        <button onclick="showScreen('math-grade')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+        <h2 class="text-2xl font-bold text-center mb-1 crystal-glow text-yellow-200">🧮 MISI MATEMATIK</h2>
+        <p id="math-galaxy-grade-label" class="text-base text-center text-purple-200 mb-5"></p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="mission-grid"></div>
+      </div>
+    </div>
+
+    <!-- 4. MISSION QUIZ AREA -->
+    <div id="screen-mission-quiz" class="screen">
+      <div class="p-3 md:p-5 max-w-4xl mx-auto">
+        <button onclick="exitMission()" class="text-cyan-200 text-base mb-3 tactile-btn">← Keluar Misi</button>
+        <div class="section-card mb-3">
+          <div class="flex justify-between items-center flex-wrap gap-2">
+            <h2 id="mq-title" class="text-xl font-black text-slate-100"></h2>
+            <div class="flex gap-2 flex-wrap">
+              <span id="mq-num" class="stat-pill text-sm">Q 1/100</span>
+              <span id="mq-coins" class="stat-pill text-sm">🪙 0</span>
+              <span id="mq-xp-earned" class="stat-pill text-sm">⭐ 0</span>
+              <span id="mq-correct-count" class="stat-pill text-sm">✅ 0</span>
+            </div>
+          </div>
+        </div>
+        <div class="section-card">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-base text-cyan-200 font-bold">SOALAN</span>
+            <span class="bg-orange-500 text-white px-3 py-1 rounded-lg text-base font-black">⏱️ <span id="mq-time-label">15</span>s</span>
+          </div>
+          <div class="bg-white/10 rounded-full overflow-hidden mb-4">
+            <div class="timer-bar bg-gradient-to-r from-lime-300 via-cyan-400 to-purple-500" id="mq-timer" style="width:100%"></div>
+          </div>
+          <p id="mq-question" class="text-center text-xl font-bold bg-white/90 text-gray-900 rounded-xl p-5 mb-4 min-h-[80px] flex items-center justify-center"></p>
+          <div id="mq-answers" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+          
+          <div class="flex justify-center gap-3 mt-4 flex-wrap">
+            <button type="button" class="neon-btn tactile-btn px-4 py-2 rounded-xl text-sm font-bold text-purple-200 border border-purple-500" onclick="useHint()">💡 Hint (💎20)</button>
+            <button type="button" class="neon-btn tactile-btn px-4 py-2 rounded-xl text-sm font-bold text-orange-200 border border-orange-500" onclick="skipQuestion()">⏩ Skip (🪙30)</button>
+            <button type="button" class="neon-btn tactile-btn px-4 py-2 rounded-xl text-sm font-bold text-blue-200 border border-blue-500" onclick="useFiftyFifty()">🎯 50:50 (💎50)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. SHOP SCREEN -->
+    <div id="screen-shop" class="screen">
+      <div class="p-4 max-w-lg mx-auto">
+        <button onclick="showScreen('home')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+        <h2 class="text-2xl font-bold text-center mb-2 text-emerald-400">🛒 Kedai Universe</h2>
+        <p class="text-base text-center text-slate-200 mb-4">🪙 <span id="shop-coins">0</span> | 💎 <span id="shop-diamonds">0</span></p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="shop-grid"></div>
+      </div>
+    </div>
+
+    <!-- 6. HERO & PET SYSTEMS -->
+    <div id="screen-hero-system" class="screen">
+      <div class="p-4 max-w-2xl mx-auto">
+        <button onclick="showScreen('home')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+        <h2 class="text-2xl font-bold text-center mb-2 crystal-glow text-white">🦸 Hero System</h2>
+        <div class="grid grid-cols-3 gap-3 mb-4" id="hero-grid"></div>
+        <button type="button" class="neon-btn tactile-btn w-full py-3 rounded-full bg-black border-2 border-cyan-200 text-white text-base font-black shadow-[0_0_18px_rgba(34,211,238,.55)] mb-4" onclick="confirmHeroSelection()">✅ Confirm Hero</button>
+        <div id="hero-power-box" class="section-card border border-cyan-400/60 hidden">
+          <h3 class="text-base font-black text-cyan-200 mb-2">⚡ Kuasa Hero Aktif</h3>
+          <p class="text-slate-200">Nama: <span id="power-hero-name" class="font-bold"></span></p>
+          <p class="text-slate-200">Bonus: <span id="power-hero-bonus" class="text-green-300 font-bold"></span></p>
+        </div>
+      </div>
+    </div>
+
+    <div id="screen-pet-system" class="screen">
+      <div class="p-4 max-w-2xl mx-auto">
+        <button onclick="showScreen('home')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+        <h2 class="text-2xl font-bold text-center mb-2 crystal-glow text-white">🐾 Pet System</h2>
+        <div class="grid grid-cols-3 gap-3 mb-4" id="pet-grid"></div>
+        <button type="button" class="neon-btn tactile-btn w-full py-3 rounded-full bg-black border-2 border-orange-200 text-white text-base font-black shadow-[0_0_18px_rgba(251,146,60,.55)]" onclick="confirmPetSelection()">✅ Confirm Pet</button>
+      </div>
+    </div>
+
+    <!-- 7. GALAXY MAP -->
+    <div id="screen-galaxy" class="screen">
+      <div class="p-4 max-w-lg mx-auto">
+        <button onclick="showScreen('home')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+        <h2 class="text-2xl font-bold text-center mb-4 crystal-glow text-cyan-100">🗺️ Peta Galaksi</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3" id="galaxy-planets"></div>
+      </div>
+    </div>
+
+    <!-- 8. PROFILE -->
+    <div id="screen-profile" class="screen">
+      <div class="p-4 max-w-2xl mx-auto">
+        <button onclick="showScreen('home')" class="text-cyan-300 text-base mb-3 tactile-btn">← Kembali</button>
+        <div class="section-card border-cyan-400/40 bg-gradient-to-br from-cyan-950/80 to-purple-950/80">
+          <div class="flex items-center gap-4">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-cyan-400 flex items-center justify-center text-4xl" id="profile-avatar-display">🌟</div>
+            <div class="flex-1">
+              <h2 class="text-2xl font-black text-slate-100 crystal-glow" id="profile-player-name">Express Ranger</h2>
+              <p class="text-base text-slate-200">Level <span id="profile-hub-level">1</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-4">
+          <button class="menu-btn tactile-btn" onclick="profileAction('avatar')">🖼️ Avatar</button>
+          <button class="menu-btn tactile-btn" onclick="profileAction('rename')">✏️ Nama</button>
+          <button class="menu-btn tactile-btn" onclick="profileAction('stats')">📊 Statistik</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Navigasi Bawah -->
+  <nav class="bottom-nav bg-black/90 border-t border-purple-500/30 flex justify-around items-center py-3 px-1">
+    <button class="nav-item active flex flex-col items-center px-2 py-1 tactile-btn" onclick="navTo('home')"><span class="text-xl">🏠</span><span class="text-sm text-slate-200">Home</span></button>
+    <button class="nav-item flex flex-col items-center px-2 py-1 tactile-btn" onclick="navTo('galaxy')"><span class="text-xl">🗺️</span><span class="text-sm text-slate-200">Galaxy</span></button>
+    <button class="nav-item flex flex-col items-center px-2 py-1 tactile-btn" onclick="navTo('subject')"><span class="text-xl">📚</span><span class="text-sm text-slate-200">Subject</span></button>
+    <button class="nav-item flex flex-col items-center px-2 py-1 tactile-btn" onclick="navTo('shop')"><span class="text-xl">🛒</span><span class="text-sm text-slate-200">Shop</span></button>
+    <button class="nav-item flex flex-col items-center px-2 py-1 tactile-btn" onclick="navTo('profile')"><span class="text-xl">👤</span><span class="text-sm text-slate-200">Profile</span></button>
+  </nav>
+
+  <!-- JavaScript Scripts Modular -->
+  <script src="js/data/tema-item.js"></script>
+  <script src="js/data/soalan-bm.js"></script>
+  <script src="js/data/soalan-math.js"></script>
+  <script src="js/core/state.js"></script>
+  <script src="js/core/gameplay.js"></script>
+  <script src="js/ui/app.js"></script>
+</body>
+</html>
+
+```
